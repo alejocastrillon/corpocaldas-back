@@ -59,8 +59,8 @@ public class AccessLayerExceptionHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {RequestAccessBadRequestException.class})
-    public ResponseEntity<ExceptionResponse> handleRequestAccessUpdateBadRequest(RequestAccessBadRequestException e, WebRequest request) {
+    @ExceptionHandler(value = {AccessRequestBadRequestException.class})
+    public ResponseEntity<ExceptionResponse> handleRequestAccessUpdateBadRequest(AccessRequestBadRequestException e, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(e.getLocalizedMessage());
         ExceptionResponse exceptionResponse = new ExceptionResponse("Request access update bad request",

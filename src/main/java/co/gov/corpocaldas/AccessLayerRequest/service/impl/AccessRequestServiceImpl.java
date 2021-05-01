@@ -1,14 +1,13 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 
-import co.gov.corpocaldas.AccessLayerRequest.dto.RequestAccessDto;
-import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
-import co.gov.corpocaldas.AccessLayerRequest.entity.RequestAccess;
+import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
+import co.gov.corpocaldas.AccessLayerRequest.entity.AccessRequest;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.MailSenderException;
-import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.RequestAccessBadRequestException;
+import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.AccessRequestBadRequestException;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.TokenMismatch;
-import co.gov.corpocaldas.AccessLayerRequest.repository.RequestAccessRepository;
+import co.gov.corpocaldas.AccessLayerRequest.repository.AccessRequestRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
-import co.gov.corpocaldas.AccessLayerRequest.service.RequestAccessService;
+import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,10 @@ import java.util.Base64;
 import java.util.List;
 
 @Service
-public class RequestAccessServiceImpl implements RequestAccessService {
+public class AccessRequestServiceImpl implements AccessRequestService {
 
     @Autowired
-    private RequestAccessRepository requestAccessRepository;
+    private AccessRequestRepository accessRequestRepository;
 
     @Autowired
     private LayerService layerService;
@@ -41,13 +40,13 @@ public class RequestAccessServiceImpl implements RequestAccessService {
     /**
      * Persist the information of access request to a specific layer.
      *
-     * @param requestAccess Information of the access request
+     * @param accessRequest Information of the access request
      * @return Persisted information of the access request
      */
     @Override
-    public RequestAccessDto saveRequestAccess(RequestAccessDto requestAccess) {
-        return mapper.map(requestAccessRepository.save(mapper.map(requestAccess, RequestAccess.class)),
-                RequestAccessDto.class);
+    public AccessRequestDto saveRequestAccess(AccessRequestDto accessRequest) {
+        return mapper.map(accessRequestRepository.save(mapper.map(accessRequest, AccessRequest.class)),
+                AccessRequestDto.class);
     }
 
     private String generateToken() {
@@ -57,14 +56,14 @@ public class RequestAccessServiceImpl implements RequestAccessService {
         return Base64.getUrlEncoder().encodeToString(randomBytes);
     }
 
-    private void sendNotificationMail(RequestAccessDto requestAccess) throws MessagingException {
+    private void sendNotificationMail(AccessRequestDto accessRequest) throws MessagingException {
         String message = "Cordial Saludo\nPor medio de la presente que su petición de acceso a la capa "
-                + requestAccess.getNameLayer() + " ha sido aprobada, con el token " + requestAccess.getToken()
+                + accessRequest.getNameLayer() + " ha sido aprobada, con el token " + accessRequest.getToken()
                 + "\nMuchas gracias por la atención prestada";
         MimeMessage mail = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mail, false);
-        messageHelper.setTo(requestAccess.getEmail());
-        messageHelper.setSubject("Petición de acceso aproabada a la capa " + requestAccess.getNameLayer()
+        messageHelper.setTo(accessRequest.getEmail());
+        messageHelper.setSubject("Petición de acceso aproabada a la capa " + accessRequest.getNameLayer()
                 + " - Corpocaldas");
         messageHelper.setText(message);
         mailSender.send(mail);
@@ -73,24 +72,24 @@ public class RequestAccessServiceImpl implements RequestAccessService {
     /**
      * Update the information of a specific access request.
      *
-     * @param requestAccessId Request access identifier
-     * @param requestAccess   Information of the access request
+     * @param accessRequestId Request access identifier
+     * @param accessRequest   Information of the access request
      * @return Updated information of the access request
      */
     @Override
-    public RequestAccessDto updateRequestAccess(int requestAccessId, RequestAccessDto requestAccess) {
-        if (requestAccessId == requestAccess.getId()) {
-            if (requestAccess.getToken() == null && requestAccess.getApproved()) {
-                requestAccess.setToken(generateToken());
+    public AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest) {
+        if (accessRequestId == accessRequest.getId()) {
+            if (accessRequest.getToken() == null && accessRequest.getApproved()) {
+                accessRequest.setToken(generateToken());
                 try {
-                    sendNotificationMail(requestAccess);
+                    sendNotificationMail(accessRequest);
                 } catch (MessagingException e) {
-                    throw new MailSenderException("The mail could not be sent to " + requestAccess.getEmail());
+                    throw new MailSenderException("The mail could not be sent to " + accessRequest.getEmail());
                 }
             }
-            return saveRequestAccess(requestAccess);
+            return saveRequestAccess(accessRequest);
         } else {
-            throw new RequestAccessBadRequestException("El identificador proveido no coincide con el identificador de" +
+            throw new AccessRequestBadRequestException("El identificador proveido no coincide con el identificador de" +
                     " la petición de acceso que quiere modificar");
         }
     }
@@ -105,10 +104,10 @@ public class RequestAccessServiceImpl implements RequestAccessService {
      * @return Transaction state
      */
     @Override
-    public RequestAccessDto validateAccess(int layerId, String email, String token) {
-        return mapper.map(requestAccessRepository.findByEmailAndTokenAndLayerIdAndApprovedTrue(email, token, layerId).orElseGet(() -> {
+    public AccessRequestDto validateAccess(int layerId, String email, String token) {
+        return mapper.map(accessRequestRepository.findByEmailAndTokenAndLayerIdAndApprovedTrue(email, token, layerId).orElseGet(() -> {
             throw new TokenMismatch("El token proveido no hizo match para la capa " + layerId);
-        }), RequestAccessDto.class);
+        }), AccessRequestDto.class);
     }
 
     /**
@@ -117,8 +116,8 @@ public class RequestAccessServiceImpl implements RequestAccessService {
      * @return List of request access to be reviewed
      */
     @Override
-    public List<RequestAccessDto> requestWaitingForApproval() {
-        return (List<RequestAccessDto>) utility.parseList(requestAccessRepository
-                .findByLayerAccessGrantedAndApprovedIsNull(3), RequestAccessDto.class);
+    public List<AccessRequestDto> requestWaitingForApproval() {
+        return (List<AccessRequestDto>) utility.parseList(accessRequestRepository
+                .findByLayerAccessGrantedAndApprovedIsNull(3), AccessRequestDto.class);
     }
 }

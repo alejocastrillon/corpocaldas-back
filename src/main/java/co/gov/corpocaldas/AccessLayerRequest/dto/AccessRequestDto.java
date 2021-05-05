@@ -1,12 +1,15 @@
 package co.gov.corpocaldas.AccessLayerRequest.dto;
 
-import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
+import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
+import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.regex.Pattern;
 
 
 @Getter
@@ -21,7 +24,7 @@ public class AccessRequestDto {
     @ApiModelProperty(notes = "Email that request the access", required = true)
     private String email;
     @ApiModelProperty(notes = "Description of the use that the user will give the layer")
-    private String observacion;
+    private String description;
     @ApiModelProperty(notes = "Layer identifier that the user wants to access", required = true)
     private int idLayer;
     @ApiModelProperty(notes = "Layer name", required = true)
@@ -31,4 +34,20 @@ public class AccessRequestDto {
     @ApiModelProperty(notes = "Determine if the access request has been approved")
     private Boolean approved;
 
+    public void setEmail(String email) {
+        Pattern pattern = Pattern.compile(ModelValidationError.EMAIL_REGEX);
+        Preconditions.checkNotNull(email, ModelValidationError.EMAIL_ACCESS_REQUEST_NULL);
+        Preconditions.checkArgument(pattern.matcher(email).matches(), ModelValidationError.EMAIL_BAD_FORMAT);
+        this.email = email;
+    }
+
+    public void setDescription(String description) {
+        Preconditions.checkNotNull(description, ModelValidationError.DESCRIPTION_ACCESS_REQUEST_NULL);
+        this.description = description;
+    }
+
+    public void setNameLayer(String nameLayer) {
+        Preconditions.checkNotNull(nameLayer, ModelValidationError.NAME_LAYER_NULL);
+        this.nameLayer = nameLayer;
+    }
 }

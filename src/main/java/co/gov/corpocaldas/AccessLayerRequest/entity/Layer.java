@@ -1,5 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.entity;
 
+import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
+import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -24,12 +28,25 @@ public class Layer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @ApiModelProperty(notes = "Layer identifier")
     private int id;
+    @NotNull(message = ModelValidationError.NAME_LAYER_NULL)
+    @NotBlank(message = ModelValidationError.NAME_LAYER_NULL)
     @ApiModelProperty(notes = "Layer name", required = true)
     private String name;
+    @NotNull(message = ModelValidationError.URL_LAYER_NULL)
+    @NotBlank(message = ModelValidationError.URL_LAYER_NULL)
     @ApiModelProperty(notes = "Layer url that redirect to the info", required = true)
     private String url;
     @ApiModelProperty(notes = "Access granted to the layer\n 1. Public layer with loss sensitivity \n 2. Public layer" +
             " with medium sensitivity \n 3. Private layer", required = true)
     private int accessGranted;
 
+    public void setName(String name) {
+        Preconditions.checkNotNull(name, ModelValidationError.NAME_LAYER_NULL);
+        this.name = name;
+    }
+
+    public void setUrl(String url) {
+        Preconditions.checkNotNull(url, ModelValidationError.URL_LAYER_NULL);
+        this.url = url;
+    }
 }

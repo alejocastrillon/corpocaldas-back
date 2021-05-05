@@ -34,7 +34,7 @@ public class AccessRequest {
     @NotNull(message = ModelValidationError.DESCRIPTION_ACCESS_REQUEST_NULL)
     @NotBlank(message = ModelValidationError.DESCRIPTION_ACCESS_REQUEST_NULL)
     private String description;
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Layer layer;
     private String token;
     private Boolean approved;

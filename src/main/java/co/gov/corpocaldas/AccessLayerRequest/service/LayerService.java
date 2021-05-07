@@ -35,6 +35,13 @@ public interface LayerService {
     Layer getLayer(int id);
 
     /**
+     * Obtain the information of a specific layer by searching for its name.
+     * @param name Name of the layer
+     * @return Information of the resultant layer
+     */
+    Layer getLayerByName(String name);
+
+    /**
      * Remove the information of a specific layer by searching for its identifier.
      * @param id Identifier of the layer
      * @return Transaction state

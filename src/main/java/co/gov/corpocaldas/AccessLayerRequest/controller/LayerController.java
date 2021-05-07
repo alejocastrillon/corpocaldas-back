@@ -86,6 +86,23 @@ public class LayerController {
     }
 
     /**
+     * Endpoint that returns the information of a specific layer for searching by its name.
+     * @param name Name of the layer
+     * @return Information of the layer associated to this name
+     */
+    @ApiOperation(value = "Endpoint that returns the information of a specific layer for searching by its name",
+            response = Layer.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The information of the layer was obtained successfully"),
+            @ApiResponse(code = 404, message = "No layer was obtained")
+    })
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Layer> getLayerByName(@ApiParam(value = "Name of the layer", required = true)
+                                                    @PathVariable("name") String name) {
+        return new ResponseEntity<>(layerService.getLayerByName(name), HttpStatus.OK);
+    }
+
+    /**
      * Endpoint that delete the information of a specific layer for searching by its identifier.
      * @param id Identifier of the layer
      * @return Response entity with the status of action

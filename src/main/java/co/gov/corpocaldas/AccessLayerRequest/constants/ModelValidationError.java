@@ -2,6 +2,10 @@ package co.gov.corpocaldas.AccessLayerRequest.constants;
 
 public class ModelValidationError {
 
+    public static final String NAME_NULL = "El nombre del usuario no debe estar vacío";
+
+    public static final String NAME_COMPANY_NULL = "El nombre de la compañia o entidad no debe estar vacío";
+
     public static final String EMAIL_ACCESS_REQUEST_NULL = "El correo electrónico no debe estar vacío";
 
     public static final String EMAIL_BAD_FORMAT = "El correo electrónico es invalido";

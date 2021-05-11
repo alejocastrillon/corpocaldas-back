@@ -28,6 +28,12 @@ public class AccessRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotNull(message = ModelValidationError.NAME_NULL)
+    @NotBlank(message = ModelValidationError.NAME_NULL)
+    private String name;
+    @NotNull(message = ModelValidationError.NAME_COMPANY_NULL)
+    @NotBlank(message = ModelValidationError.NAME_COMPANY_NULL)
+    private String company;
     @NotNull(message = ModelValidationError.EMAIL_ACCESS_REQUEST_NULL)
     @NotBlank(message = ModelValidationError.EMAIL_ACCESS_REQUEST_NULL)
     private String email;

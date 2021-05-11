@@ -23,6 +23,10 @@ public class AccessRequestDto {
     private int id;
     @ApiModelProperty(notes = "Email that request the access", required = true)
     private String email;
+    @ApiModelProperty(notes = "Name of the user that require the access", required = true)
+    private String name;
+    @ApiModelProperty(notes = "Name of company or entity associated to the request", required = true)
+    private String company;
     @ApiModelProperty(notes = "Description of the use that the user will give the layer")
     private String description;
     @ApiModelProperty(notes = "Layer identifier that the user wants to access", required = true)
@@ -33,6 +37,16 @@ public class AccessRequestDto {
     private String token;
     @ApiModelProperty(notes = "Determine if the access request has been approved")
     private Boolean approved;
+
+    public void setName(String name) {
+        Preconditions.checkNotNull(name, ModelValidationError.NAME_NULL);
+        this.name = name;
+    }
+
+    public void setCompany(String company) {
+        Preconditions.checkNotNull(company, ModelValidationError.NAME_COMPANY_NULL);
+        this.company = company;
+    }
 
     public void setEmail(String email) {
         Pattern pattern = Pattern.compile(ModelValidationError.EMAIL_REGEX);

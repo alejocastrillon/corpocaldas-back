@@ -120,4 +120,10 @@ public class AccessRequestServiceImpl implements AccessRequestService {
         return (List<AccessRequestDto>) utility.parseList(accessRequestRepository
                 .findByLayerAccessGrantedAndApprovedIsNull(3), AccessRequestDto.class);
     }
+
+    @Override
+    public List<AccessRequestDto> filterAccessRequests(String name, String company, String email, Integer layerid) {
+        return (List<AccessRequestDto>) utility.parseList(accessRequestRepository.getAll(name, company, email, layerid),
+                AccessRequestDto.class);
+    }
 }

@@ -70,6 +70,33 @@ public class AccessRequestController {
     }
 
     /**
+     * Apply filter on access request by params selected.
+     * @param name Name of the user that request the access
+     * @param company Name of company or entity associated to request
+     * @param email Email of the user that request the access
+     * @param layerid Layer identifier associated to request
+     * @return Response entity with the access requests that matching with the parameters value
+     */
+    @ApiOperation(value = "Apply filter on access request by params selected", response = AccessRequestDto.class,
+            responseContainer = "List<>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The filter was applied on access request successfully")
+    })
+    @GetMapping()
+    public ResponseEntity<List<AccessRequestDto>> filterAccessRequest(
+            @ApiParam(value = "Name of the user that request the access")
+            @RequestParam(value = "name", required = false) String name,
+            @ApiParam(value = "Name of company or entity associated to request")
+            @RequestParam(value = "company", required = false) String company,
+            @ApiParam(value = "Email of the user that request the access")
+            @RequestParam(value = "email", required = false) String email,
+            @ApiParam(value = "Layer identifier associated to request")
+            @RequestParam(value = "layerid", required = false) Integer layerid) {
+        return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layerid),
+                HttpStatus.OK);
+    }
+
+    /**
      * Endpoint that verify the access to private layer through token, email and layer identifier.
      * @param layerId Layer identifier
      * @param accessToken Access token provided by the platform

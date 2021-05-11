@@ -27,7 +27,7 @@ public class AccessRequestDto {
     private String name;
     @ApiModelProperty(notes = "Name of company or entity associated to the request", required = true)
     private String company;
-    @ApiModelProperty(notes = "Description of the use that the user will give the layer")
+    @ApiModelProperty(notes = "Description of the use that the user will give the layer", required = true)
     private String description;
     @ApiModelProperty(notes = "Layer identifier that the user wants to access", required = true)
     private int idLayer;

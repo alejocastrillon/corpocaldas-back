@@ -11,6 +11,9 @@ import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -122,8 +126,14 @@ public class AccessRequestServiceImpl implements AccessRequestService {
     }
 
     @Override
-    public List<AccessRequestDto> filterAccessRequests(String name, String company, String email, Integer layerid) {
-        return (List<AccessRequestDto>) utility.parseList(accessRequestRepository.getAll(name, company, email, layerid),
-                AccessRequestDto.class);
+    public List<AccessRequestDto> filterAccessRequests(String name, String company, String email, Integer layerid,
+                                                       int numberPage, int pageSize) {
+        Pageable pageable = PageRequest.of(numberPage, pageSize);
+        Page<AccessRequest> pageResult = accessRequestRepository.getAll(name, company, email, layerid, pageable);
+        if (pageResult.hasContent()) {
+            return (List<AccessRequestDto>) utility.parseList(pageResult.getContent(), AccessRequestDto.class);
+        } else {
+            return new ArrayList<>();
+        }
     }
 }

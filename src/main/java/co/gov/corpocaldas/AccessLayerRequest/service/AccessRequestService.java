@@ -47,8 +47,11 @@ public interface AccessRequestService {
      * @param company Name of company or entity associated to request
      * @param email Email of the user that request the access
      * @param layerid Layer identifier associated to request
+     * @param numberPage Number of page
+     * @param pageSize Size of page
      * @return Access request list
      */
-    List<AccessRequestDto> filterAccessRequests(String name, String company, String email, Integer layerid);
+    List<AccessRequestDto> filterAccessRequests(String name, String company, String email, Integer layerid,
+                                                int numberPage, int pageSize);
 
 }

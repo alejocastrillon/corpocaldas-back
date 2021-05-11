@@ -91,8 +91,12 @@ public class AccessRequestController {
             @ApiParam(value = "Email of the user that request the access")
             @RequestParam(value = "email", required = false) String email,
             @ApiParam(value = "Layer identifier associated to request")
-            @RequestParam(value = "layerid", required = false) Integer layerid) {
-        return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layerid),
+            @RequestParam(value = "layerid", required = false) Integer layerid,
+            @ApiParam(value = "Page number", defaultValue = "0")
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @ApiParam(value = "Page size", defaultValue = "10")
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layerid, page, size),
                 HttpStatus.OK);
     }
 

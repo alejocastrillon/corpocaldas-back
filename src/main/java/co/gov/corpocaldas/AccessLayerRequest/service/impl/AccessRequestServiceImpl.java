@@ -128,9 +128,11 @@ public class AccessRequestServiceImpl implements AccessRequestService {
 
     @Override
     public PaginatorDto filterAccessRequests(String name, String company, String email, String layername,
-                                             int numberPage, int pageSize) {
+                                             Integer layeraccessgranted, Boolean layerapproved, int numberPage,
+                                             int pageSize) {
         Pageable pageable = PageRequest.of(numberPage, pageSize);
-        Page<AccessRequest> pageResult = accessRequestRepository.getAll(name, company, email, layername, pageable);
+        Page<AccessRequest> pageResult = accessRequestRepository.getAll(name, company, email, layername,
+                layeraccessgranted, layerapproved, pageable);
         if (pageResult.hasContent()) {
             //return (List<AccessRequestDto>) utility.parseList(pageResult.getContent(), AccessRequestDto.class);
             return new PaginatorDto((List<AccessRequestDto>) utility.parseList(pageResult.getContent(),

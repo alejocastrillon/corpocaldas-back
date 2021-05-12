@@ -14,9 +14,9 @@ import java.util.Optional;
 @Repository
 public interface AccessRequestRepository extends JpaRepository<AccessRequest, Integer> {
 
-    @Query("SELECT a FROM AccessRequest a WHERE (:name IS NULL OR a.name ILIKE %:name%)" +
-            " AND (:company IS NULL OR a.company ILIKE %:company%) AND (:email IS NULL OR a.email ILIKE %:email%)" +
-            " AND (:layername IS NULL OR a.layer.name ILIKE %:layername%)" +
+    @Query("SELECT a FROM AccessRequest a WHERE (:name IS NULL OR a.name LIKE %:name%)" +
+            " AND (:company IS NULL OR a.company LIKE %:company%) AND (:email IS NULL OR a.email LIKE %:email%)" +
+            " AND (:layername IS NULL OR a.layer.name LIKE %:layername%)" +
             " AND (:layeraccessgranted IS NULL OR a.layer.accessGranted = :layeraccessgranted)" +
             " AND (:approved IS NULL OR a.approved = :approved) AND (:approved IS NOT NULL OR a.approved = NULL)")
     Page<AccessRequest> getAll(@Param("name") String name, @Param("company") String company,

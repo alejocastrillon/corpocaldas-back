@@ -74,7 +74,7 @@ public class AccessRequestController {
      * @param name Name of the user that request the access
      * @param company Name of company or entity associated to request
      * @param email Email of the user that request the access
-     * @param layerid Layer identifier associated to request
+     * @param layername Layer name associated to request
      * @return Response entity with the access requests that matching with the parameters value
      */
     @ApiOperation(value = "Apply filter on access request by params selected", response = AccessRequestDto.class,
@@ -90,13 +90,13 @@ public class AccessRequestController {
             @RequestParam(value = "company", required = false) String company,
             @ApiParam(value = "Email of the user that request the access")
             @RequestParam(value = "email", required = false) String email,
-            @ApiParam(value = "Layer identifier associated to request")
-            @RequestParam(value = "layerid", required = false) Integer layerid,
+            @ApiParam(value = "Layer name associated to request")
+            @RequestParam(value = "layername", required = false) String layername,
             @ApiParam(value = "Page number", defaultValue = "0")
             @RequestParam(value = "page", defaultValue = "0") int page,
             @ApiParam(value = "Page size", defaultValue = "10")
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layerid, page, size),
+        return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layername, page, size),
                 HttpStatus.OK);
     }
 

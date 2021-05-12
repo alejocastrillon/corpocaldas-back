@@ -16,9 +16,9 @@ public interface AccessRequestRepository extends JpaRepository<AccessRequest, In
 
     @Query("SELECT a FROM AccessRequest a WHERE (:name IS NULL OR a.name LIKE %:name%)" +
             " AND (:company IS NULL OR a.company LIKE %:company%) AND (:email IS NULL OR a.email LIKE %:email%)" +
-            " AND (:layerid IS NULL OR a.layer.id = :layerid)")
+            " AND (:layername IS NULL OR a.layer.name LIKE %:layername%)")
     Page<AccessRequest> getAll(@Param("name") String name, @Param("company") String company,
-                               @Param("email") String email, @Param("layerid") Integer layerid, Pageable pageable);
+                               @Param("email") String email, @Param("layername") String layername, Pageable pageable);
 
     Optional<AccessRequest> findByEmailAndTokenAndLayerIdAndApprovedTrue(String email, String token, int layerId);
 

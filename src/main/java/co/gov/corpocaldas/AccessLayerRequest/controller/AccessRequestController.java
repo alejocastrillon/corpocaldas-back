@@ -93,9 +93,9 @@ public class AccessRequestController {
             @ApiParam(value = "Layer name associated to request")
             @RequestParam(value = "layername", required = false) String layername,
             @ApiParam(value = "Layer access granted associated to request")
-            @RequestParam(value = "access_granted") Integer layeraccessgranted,
+            @RequestParam(value = "access_granted", required = false) Integer layeraccessgranted,
             @ApiParam(value = "Determine if the access request has been approved or disapproved")
-            @RequestParam(value = "approved") Boolean layerapproved,
+            @RequestParam(value = "approved", required = false) Boolean layerapproved,
             @ApiParam(value = "Page number", defaultValue = "0")
             @RequestParam(value = "page", defaultValue = "0") int page,
             @ApiParam(value = "Page size", defaultValue = "10")

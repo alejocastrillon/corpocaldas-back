@@ -1,6 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.controller;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
+import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,13 +78,12 @@ public class AccessRequestController {
      * @param layername Layer name associated to request
      * @return Response entity with the access requests that matching with the parameters value
      */
-    @ApiOperation(value = "Apply filter on access request by params selected", response = AccessRequestDto.class,
-            responseContainer = "List<>")
+    @ApiOperation(value = "Apply filter on access request by params selected", response = PaginatorDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "The filter was applied on access request successfully")
     })
     @GetMapping()
-    public ResponseEntity<List<AccessRequestDto>> filterAccessRequest(
+    public ResponseEntity<PaginatorDto> filterAccessRequest(
             @ApiParam(value = "Name of the user that request the access")
             @RequestParam(value = "name", required = false) String name,
             @ApiParam(value = "Name of company or entity associated to request")

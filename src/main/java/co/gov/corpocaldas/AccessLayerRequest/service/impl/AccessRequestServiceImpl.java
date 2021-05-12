@@ -1,6 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
+import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.AccessRequest;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.MailSenderException;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.AccessRequestBadRequestException;
@@ -126,14 +127,16 @@ public class AccessRequestServiceImpl implements AccessRequestService {
     }
 
     @Override
-    public List<AccessRequestDto> filterAccessRequests(String name, String company, String email, String layername,
-                                                       int numberPage, int pageSize) {
+    public PaginatorDto filterAccessRequests(String name, String company, String email, String layername,
+                                             int numberPage, int pageSize) {
         Pageable pageable = PageRequest.of(numberPage, pageSize);
         Page<AccessRequest> pageResult = accessRequestRepository.getAll(name, company, email, layername, pageable);
         if (pageResult.hasContent()) {
-            return (List<AccessRequestDto>) utility.parseList(pageResult.getContent(), AccessRequestDto.class);
+            //return (List<AccessRequestDto>) utility.parseList(pageResult.getContent(), AccessRequestDto.class);
+            return new PaginatorDto((List<AccessRequestDto>) utility.parseList(pageResult.getContent(),
+                    AccessRequestDto.class), pageResult.getTotalElements());
         } else {
-            return new ArrayList<>();
+            return new PaginatorDto();
         }
     }
 }

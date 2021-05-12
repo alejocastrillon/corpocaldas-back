@@ -1,6 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.service;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
+import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public interface AccessRequestService {
      * @param pageSize Size of page
      * @return Access request list
      */
-    List<AccessRequestDto> filterAccessRequests(String name, String company, String email, String layername,
-                                                int numberPage, int pageSize);
+    PaginatorDto filterAccessRequests(String name, String company, String email, String layername,
+                                      int numberPage, int pageSize);
 
 }

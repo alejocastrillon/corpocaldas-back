@@ -92,12 +92,16 @@ public class AccessRequestController {
             @RequestParam(value = "email", required = false) String email,
             @ApiParam(value = "Layer name associated to request")
             @RequestParam(value = "layername", required = false) String layername,
+            @ApiParam(value = "Layer access granted associated to request")
+            @RequestParam(value = "access_granted") Integer layeraccessgranted,
+            @ApiParam(value = "Determine if the access request has been approved or disapproved")
+            @RequestParam(value = "approved") Boolean layerapproved,
             @ApiParam(value = "Page number", defaultValue = "0")
             @RequestParam(value = "page", defaultValue = "0") int page,
             @ApiParam(value = "Page size", defaultValue = "10")
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layername, page, size),
-                HttpStatus.OK);
+        return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layername,
+                layeraccessgranted, layerapproved, page, size), HttpStatus.OK);
     }
 
     /**

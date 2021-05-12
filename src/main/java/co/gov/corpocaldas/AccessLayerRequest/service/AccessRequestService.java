@@ -48,11 +48,13 @@ public interface AccessRequestService {
      * @param company Name of company or entity associated to request
      * @param email Email of the user that request the access
      * @param layername Layer name associated to request
+     * @param layeraccessgranted Layer access granted associated to request
+     * @param layerapproved Determine if the access request has been approved or disapproved
      * @param numberPage Number of page
      * @param pageSize Size of page
      * @return Access request list
      */
     PaginatorDto filterAccessRequests(String name, String company, String email, String layername,
-                                      int numberPage, int pageSize);
+                                      Integer layeraccessgranted, Boolean layerapproved, int numberPage, int pageSize);
 
 }

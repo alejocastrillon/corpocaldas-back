@@ -36,6 +36,10 @@ public class Layer {
     @NotBlank(message = ModelValidationError.URL_LAYER_NULL)
     @ApiModelProperty(notes = "Layer url that redirect to the info", required = true)
     private String url;
+    @NotNull(message = ModelValidationError.WORKSPACE_NULL)
+    @NotBlank(message = ModelValidationError.WORKSPACE_NULL)
+    @ApiModelProperty(notes = "Workspace associated to the layer", required = true)
+    private String workspace;
     @ApiModelProperty(notes = "Access granted to the layer\n 1. Public layer with loss sensitivity \n 2. Public layer" +
             " with medium sensitivity \n 3. Private layer", required = true)
     private int accessGranted;
@@ -48,5 +52,10 @@ public class Layer {
     public void setUrl(String url) {
         Preconditions.checkNotNull(url, ModelValidationError.URL_LAYER_NULL);
         this.url = url;
+    }
+
+    public void setWorkspace(String workspace) {
+        Preconditions.checkNotNull(workspace, ModelValidationError.WORKSPACE_NULL);
+        this.workspace = workspace;
     }
 }

@@ -1,11 +1,16 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 
+import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.LayerNotFoundException;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.LayerUpdateBadRequestException;
 import co.gov.corpocaldas.AccessLayerRequest.repository.LayerRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
+import jdk.tools.jlink.internal.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +37,14 @@ public class LayerServiceImpl implements LayerService {
     }
 
     @Override
-    public List<Layer> getLayers() {
-        return repository.findAll();
+    public PaginatorDto getLayers(String name, String url, String workspace, Integer accessGranted, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Layer> pageResult = repository.getAll(name, url, workspace, accessGranted, pageable);
+        if (pageResult.hasContent()) {
+            return new PaginatorDto(pageResult.getContent(), pageResult.getTotalElements());
+        } else {
+
+        }
     }
 
     @Override

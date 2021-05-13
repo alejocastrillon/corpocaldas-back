@@ -1,6 +1,8 @@
 package co.gov.corpocaldas.AccessLayerRequest.service;
 
+import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public interface LayerService {
      * Obtain all the information of the layers that are persisted.
      * @return List of information of the layers
      */
-    List<Layer> getLayers();
+    PaginatorDto getLayers(String name, String url, String workspace, Integer accessGranted, int page, int size);
 
     /**
      * Obtain the information of a specific layer by searching for its identifier.

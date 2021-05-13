@@ -6,11 +6,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Utility {
+public abstract class Utility {
 
-    private final ModelMapper mapper = new ModelMapper();
+    private Utility() {}
 
-    public List<?> parseList(List<?> dataSource, Type destination) {
+    private static final ModelMapper mapper = new ModelMapper();
+
+    public static List<?> parseList(List<?> dataSource, Type destination) {
         List<?> dataParsed = null;
         if (dataSource != null && !dataSource.isEmpty()) {
             dataParsed = new ArrayList<>();

@@ -17,4 +17,7 @@ public class ModelValidationError {
     public static final String NAME_LAYER_NULL = "El nombre de la capa no debe estar vacío";
 
     public static final String URL_LAYER_NULL = "La URL de la capa no debe estar vacía";
+
+    public static final String WORKSPACE_NULL = "El espacio de trabajo asociado a la capa no debe estar vacío";
+
 }

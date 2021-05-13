@@ -40,8 +40,6 @@ public class AccessRequestServiceImpl implements AccessRequestService {
 
     private final ModelMapper mapper = new ModelMapper();
 
-    private final Utility utility = new Utility();
-
     /**
      * Persist the information of access request to a specific layer.
      *
@@ -122,7 +120,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
      */
     @Override
     public List<AccessRequestDto> requestWaitingForApproval() {
-        return (List<AccessRequestDto>) utility.parseList(accessRequestRepository
+        return (List<AccessRequestDto>) Utility.parseList(accessRequestRepository
                 .findByLayerAccessGrantedAndApprovedIsNull(3), AccessRequestDto.class);
     }
 
@@ -135,7 +133,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
                 layeraccessgranted, layerapproved, pageable);
         if (pageResult.hasContent()) {
             //return (List<AccessRequestDto>) utility.parseList(pageResult.getContent(), AccessRequestDto.class);
-            return new PaginatorDto((List<AccessRequestDto>) utility.parseList(pageResult.getContent(),
+            return new PaginatorDto((List<AccessRequestDto>) Utility.parseList(pageResult.getContent(),
                     AccessRequestDto.class), pageResult.getTotalElements());
         } else {
             return new PaginatorDto();

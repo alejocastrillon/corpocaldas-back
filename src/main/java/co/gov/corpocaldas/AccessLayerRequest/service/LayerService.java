@@ -2,9 +2,6 @@ package co.gov.corpocaldas.AccessLayerRequest.service;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface LayerService {
 

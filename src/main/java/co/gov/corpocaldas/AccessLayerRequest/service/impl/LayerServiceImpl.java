@@ -6,14 +6,11 @@ import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.LayerNotFoundE
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.LayerUpdateBadRequestException;
 import co.gov.corpocaldas.AccessLayerRequest.repository.LayerRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
-import jdk.tools.jlink.internal.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class LayerServiceImpl implements LayerService {

@@ -33,6 +33,8 @@ public class AccessRequestDto {
     private int idLayer;
     @ApiModelProperty(notes = "Layer name", required = true)
     private String nameLayer;
+    @ApiModelProperty(notes = "Layer access granted")
+    private int accessGrantedLayer;
     @ApiModelProperty(notes = "Token generated and provided by the platform")
     private String token;
     @ApiModelProperty(notes = "Determine if the access request has been approved")

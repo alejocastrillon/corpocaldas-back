@@ -24,7 +24,7 @@ public interface LayerService {
      * Obtain all the information of the layers that are persisted.
      * @return List of information of the layers
      */
-    PaginatorDto getLayers(String name, String url, String workspace, Integer accessGranted, int page, int size);
+    PaginatorDto getLayers(String name, String workspace, Integer accessGranted, int page, int size);
 
     /**
      * Obtain the information of a specific layer by searching for its identifier.

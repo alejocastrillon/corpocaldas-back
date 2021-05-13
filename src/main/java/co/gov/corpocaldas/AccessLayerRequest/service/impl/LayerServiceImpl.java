@@ -34,9 +34,9 @@ public class LayerServiceImpl implements LayerService {
     }
 
     @Override
-    public PaginatorDto getLayers(String name, String url, String workspace, Integer accessGranted, int page, int size) {
+    public PaginatorDto getLayers(String name, String workspace, Integer accessGranted, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Layer> pageResult = repository.getAll(name, url, workspace, accessGranted, pageable);
+        Page<Layer> pageResult = repository.getAll(name, workspace, accessGranted, pageable);
         if (pageResult.hasContent()) {
             return new PaginatorDto(pageResult.getContent(), pageResult.getTotalElements());
         } else {

@@ -56,7 +56,6 @@ public class LayerController {
     /**
      * Endpoint that returns all the layers registered.
      * @param name Value for name field search
-     * @param url Value for url field search
      * @param workspace Value for workspace field search
      * @param accessGranted Value for access granted field search
      * @param page Value for number page
@@ -71,12 +70,11 @@ public class LayerController {
     @GetMapping()
     public ResponseEntity<PaginatorDto> getLayers(
             @ApiParam(value = "Value for name field search") @RequestParam(value = "name", required = false) String name,
-            @ApiParam(value = "Value for url field search") @RequestParam(value = "url", required = false) String url,
             @ApiParam(value = "Value for workspace field search") @RequestParam(value = "workspace", required = false) String workspace,
             @ApiParam(value = "Value for access granted field search") @RequestParam(value = "access_granted", required = false) Integer accessGranted,
             @ApiParam(value = "Value for number page") @RequestParam(value = "page", defaultValue = "0") int page,
             @ApiParam(value = "Quantity of elements returned into the page") @RequestParam(value = "size", defaultValue = "10") int size) {
-        return new ResponseEntity<>(layerService.getLayers(name, url, workspace, accessGranted, page, size), HttpStatus.OK);
+        return new ResponseEntity<>(layerService.getLayers(name, workspace, accessGranted, page, size), HttpStatus.OK);
     }
 
     /**

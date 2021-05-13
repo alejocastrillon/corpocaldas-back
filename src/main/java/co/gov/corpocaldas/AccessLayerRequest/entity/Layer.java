@@ -35,7 +35,7 @@ public class Layer {
     @NotNull(message = ModelValidationError.URL_LAYER_NULL)
     @NotBlank(message = ModelValidationError.URL_LAYER_NULL)
     @ApiModelProperty(notes = "Layer url that redirect to the info", required = true)
-    private String url;
+    private String referenceName;
     @NotNull(message = ModelValidationError.WORKSPACE_NULL)
     @NotBlank(message = ModelValidationError.WORKSPACE_NULL)
     @ApiModelProperty(notes = "Workspace associated to the layer", required = true)
@@ -49,9 +49,9 @@ public class Layer {
         this.name = name;
     }
 
-    public void setUrl(String url) {
-        Preconditions.checkNotNull(url, ModelValidationError.URL_LAYER_NULL);
-        this.url = url;
+    public void setReferenceName(String referenceName) {
+        Preconditions.checkNotNull(referenceName, ModelValidationError.URL_LAYER_NULL);
+        this.referenceName = referenceName;
     }
 
     public void setWorkspace(String workspace) {

@@ -39,7 +39,7 @@ public class Layer {
     @NotNull(message = ModelValidationError.WORKSPACE_NULL)
     @NotBlank(message = ModelValidationError.WORKSPACE_NULL)
     @ApiModelProperty(notes = "Workspace associated to the layer", required = true)
-    private String workspace;
+    private String workspace = "corpocaldas";
     @ApiModelProperty(notes = "Access granted to the layer\n 1. Public layer with loss sensitivity \n 2. Public layer" +
             " with medium sensitivity \n 3. Private layer", required = true)
     private int accessGranted;

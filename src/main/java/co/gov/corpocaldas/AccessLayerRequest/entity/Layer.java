@@ -43,6 +43,8 @@ public class Layer {
     @ApiModelProperty(notes = "Access granted to the layer\n 1. Public layer with loss sensitivity \n 2. Public layer" +
             " with medium sensitivity \n 3. Private layer", required = true)
     private int accessGranted;
+    @ApiModelProperty(notes = "Determines if the layer is visible", required = true)
+    private boolean visible = true;
 
     public void setName(String name) {
         Preconditions.checkNotNull(name, ModelValidationError.NAME_LAYER_NULL);

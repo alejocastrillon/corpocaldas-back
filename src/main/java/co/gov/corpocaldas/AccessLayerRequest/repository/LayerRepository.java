@@ -14,9 +14,10 @@ import java.util.Optional;
 public interface LayerRepository extends JpaRepository<Layer, Integer> {
 
     @Query("SELECT l FROM Layer l WHERE (:name IS NULL OR l.name LIKE %:name%) AND (:workspace IS NULL OR l.workspace LIKE %:workspace%)" +
-            " AND (:accessGranted IS NULL OR l.accessGranted = :accessGranted)")
+            " AND (:accessGranted IS NULL OR l.accessGranted = :accessGranted)" +
+            " AND (:visible IS NULL OR l.visible = :visible)")
     Page<Layer> getAll(@Param("name") String name, @Param("workspace") String workspace,
-                       @Param("accessGranted") Integer accessGranted, Pageable pageable);
+                       @Param("accessGranted") Integer accessGranted, @Param("visible") Boolean visible, Pageable pageable);
 
     Optional<Layer> findByName(String name);
 

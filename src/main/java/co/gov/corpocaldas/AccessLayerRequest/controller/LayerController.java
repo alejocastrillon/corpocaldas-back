@@ -58,6 +58,7 @@ public class LayerController {
      * @param name Value for name field search
      * @param workspace Value for workspace field search
      * @param accessGranted Value for access granted field search
+     * @param visible Value for visibility field search
      * @param page Value for number page
      * @param size Quantity of elements returned into the page
      * @return Response entity with the layer obtained
@@ -72,9 +73,10 @@ public class LayerController {
             @ApiParam(value = "Value for name field search") @RequestParam(value = "name", required = false) String name,
             @ApiParam(value = "Value for workspace field search") @RequestParam(value = "workspace", required = false) String workspace,
             @ApiParam(value = "Value for access granted field search") @RequestParam(value = "access_granted", required = false) Integer accessGranted,
+            @ApiParam(value = "Value for visibility field search") @RequestParam(value = "visible", required = false) Boolean visible,
             @ApiParam(value = "Value for number page") @RequestParam(value = "page", defaultValue = "0") int page,
             @ApiParam(value = "Quantity of elements returned into the page") @RequestParam(value = "size", defaultValue = "10") int size) {
-        return new ResponseEntity<>(layerService.getLayers(name, workspace, accessGranted, page, size), HttpStatus.OK);
+        return new ResponseEntity<>(layerService.getLayers(name, workspace, accessGranted, visible, page, size), HttpStatus.OK);
     }
 
     /**

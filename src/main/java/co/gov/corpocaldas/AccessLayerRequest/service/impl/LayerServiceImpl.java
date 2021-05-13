@@ -40,7 +40,7 @@ public class LayerServiceImpl implements LayerService {
         if (pageResult.hasContent()) {
             return new PaginatorDto(pageResult.getContent(), pageResult.getTotalElements());
         } else {
-
+            return new PaginatorDto();
         }
     }
 

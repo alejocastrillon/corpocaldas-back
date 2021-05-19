@@ -3,7 +3,7 @@ package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.AccessRequest;
-import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.AccessRequestBadRequestException;
+import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasBadRequestException;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.MailSenderException;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.TokenMismatch;
 import co.gov.corpocaldas.AccessLayerRequest.repository.AccessRequestRepository;
@@ -91,7 +91,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
             }
             return saveRequestAccess(accessRequest);
         } else {
-            throw new AccessRequestBadRequestException("El identificador proveido no coincide con el identificador de" +
+            throw new CorpocaldasBadRequestException("El identificador proveido no coincide con el identificador de" +
                     " la petición de acceso que quiere modificar");
         }
     }

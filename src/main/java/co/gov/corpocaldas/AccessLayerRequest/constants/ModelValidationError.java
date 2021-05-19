@@ -20,4 +20,11 @@ public class ModelValidationError {
 
     public static final String WORKSPACE_NULL = "El espacio de trabajo asociado a la capa no debe estar vacío";
 
+    public static final String WORKSPACE_NAME_NULL = "El nombre del espacio de trabajo no debe estar vacío";
+
+    public static final String WORKSPACE_MISMATCH_MESSAGE = "El identificador proveído por la ruta no coincide con el" +
+            " identificador interno";
+
+    public static final String WORKSPACE_NOT_FOUND = "No se encontró espacio de trabajo con el identificador %d";
+
 }

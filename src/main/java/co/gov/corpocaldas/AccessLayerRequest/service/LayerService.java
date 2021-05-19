@@ -1,7 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.service;
 
+import co.gov.corpocaldas.AccessLayerRequest.dto.LayerDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
-import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
 
 public interface LayerService {
 
@@ -10,7 +10,7 @@ public interface LayerService {
      * @param layer Information of the layer
      * @return Persisted information of the layer
      */
-    Layer saveLayer(Layer layer);
+    LayerDto saveLayer(LayerDto layer);
 
     /**
      * Update the information of the layer on db.
@@ -18,7 +18,7 @@ public interface LayerService {
      * @param layer Information of the layer
      * @return Update layer's information
      */
-    Layer updateLayer(int layerId, Layer layer);
+    void updateLayer(int layerId, LayerDto layer);
 
     /**
      * Obtain all the information of the layers that are persisted.
@@ -31,19 +31,18 @@ public interface LayerService {
      * @param id Identifier of the layer
      * @return Information of the resultant layer
      */
-    Layer getLayer(int id);
+    LayerDto getLayer(int id);
 
     /**
      * Obtain the information of a specific layer by searching for its name.
      * @param name Name of the layer
      * @return Information of the resultant layer
      */
-    Layer getLayerByName(String name);
+    LayerDto getLayerByName(String name);
 
     /**
      * Remove the information of a specific layer by searching for its identifier.
      * @param id Identifier of the layer
-     * @return Transaction state
      */
-    boolean deleteLayer(int id);
+    void deleteLayer(int id);
 }

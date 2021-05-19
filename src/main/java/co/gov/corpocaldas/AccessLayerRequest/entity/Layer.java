@@ -9,10 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -34,12 +31,13 @@ public class Layer {
     private String name;
     @NotNull(message = ModelValidationError.URL_LAYER_NULL)
     @NotBlank(message = ModelValidationError.URL_LAYER_NULL)
-    @ApiModelProperty(notes = "Layer url that redirect to the info", required = true)
+    @ApiModelProperty(notes = "Layer reference name", required = true)
     private String referenceName;
     @NotNull(message = ModelValidationError.WORKSPACE_NULL)
     @NotBlank(message = ModelValidationError.WORKSPACE_NULL)
     @ApiModelProperty(notes = "Workspace associated to the layer", required = true)
-    private String workspace;
+    @ManyToOne(optional = false)
+    private WorkSpace workspace;
     @ApiModelProperty(notes = "Access granted to the layer\n 1. Public layer with loss sensitivity \n 2. Public layer" +
             " with medium sensitivity \n 3. Private layer", required = true)
     private int accessGranted;
@@ -56,7 +54,7 @@ public class Layer {
         this.referenceName = referenceName;
     }
 
-    public void setWorkspace(String workspace) {
+    public void setWorkspace(WorkSpace workspace) {
         Preconditions.checkNotNull(workspace, ModelValidationError.WORKSPACE_NULL);
         this.workspace = workspace;
     }

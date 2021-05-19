@@ -32,8 +32,8 @@ public class AccessLayerExceptionHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {LayerNotFoundException.class})
-    public ResponseEntity<ExceptionResponse> handleLayerNotFound(LayerNotFoundException e, WebRequest request) {
+    @ExceptionHandler(value = {CorpocaldasNotFoundException.class})
+    public ResponseEntity<ExceptionResponse> handleLayerNotFound(CorpocaldasNotFoundException e, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(e.getLocalizedMessage());
         ExceptionResponse exceptionResponse = new ExceptionResponse("Layer not found", new Date(), details,
@@ -50,17 +50,8 @@ public class AccessLayerExceptionHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(value = {LayerUpdateBadRequestException.class})
-    public ResponseEntity<ExceptionResponse> handleLayerUpdatedBadRequest(LayerUpdateBadRequestException e, WebRequest request) {
-        List<String> details = new ArrayList<>();
-        details.add(e.getLocalizedMessage());
-        ExceptionResponse exceptionResponse = new ExceptionResponse("Layer update bad request", new Date(),
-                details, request.getDescription(false));
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = {AccessRequestBadRequestException.class})
-    public ResponseEntity<ExceptionResponse> handleRequestAccessUpdateBadRequest(AccessRequestBadRequestException e, WebRequest request) {
+    @ExceptionHandler(value = {CorpocaldasBadRequestException.class})
+    public ResponseEntity<ExceptionResponse> handleRequestAccessUpdateBadRequest(CorpocaldasBadRequestException e, WebRequest request) {
         List<String> details = new ArrayList<>();
         details.add(e.getLocalizedMessage());
         ExceptionResponse exceptionResponse = new ExceptionResponse("Request access update bad request",

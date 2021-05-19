@@ -1,16 +1,20 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 
+import co.gov.corpocaldas.AccessLayerRequest.dto.LayerDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
-import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.LayerNotFoundException;
-import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.LayerUpdateBadRequestException;
+import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasNotFoundException;
 import co.gov.corpocaldas.AccessLayerRequest.repository.LayerRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LayerServiceImpl implements LayerService {
@@ -18,17 +22,19 @@ public class LayerServiceImpl implements LayerService {
     @Autowired
     private LayerRepository repository;
 
+    private final ModelMapper mapper = new ModelMapper();
+
     @Override
-    public Layer saveLayer(Layer layer) {
-        return repository.save(layer);
+    public LayerDto saveLayer(LayerDto layer) {
+        return mapper.map(repository.save(mapper.map(layer, Layer.class)), LayerDto.class);
     }
 
     @Override
-    public Layer updateLayer(int layerId, Layer layer) {
+    public void updateLayer(int layerId, LayerDto layer) {
         if (layerId == layer.getId()) {
-            return saveLayer(layer);
+            saveLayer(layer);
         } else {
-            throw new LayerUpdateBadRequestException("The identifier of the layer provided mismatch with the identifier" +
+            throw new CorpocaldasNotFoundException("The identifier of the layer provided mismatch with the identifier" +
                     " that is inside the information");
         }
     }
@@ -38,27 +44,27 @@ public class LayerServiceImpl implements LayerService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Layer> pageResult = repository.getAll(name, workspace, accessGranted, visible, pageable);
         if (pageResult.hasContent()) {
-            return new PaginatorDto(pageResult.getContent(), pageResult.getTotalElements());
+            return new PaginatorDto((List<LayerDto>) Utility.parseList(pageResult.getContent(), LayerDto.class),
+                    pageResult.getTotalElements());
         } else {
             return new PaginatorDto();
         }
     }
 
     @Override
-    public Layer getLayer(int id) {
-        return repository.findById(id).orElseThrow(() -> new LayerNotFoundException("No fue encontrada capa asociada" +
-                " con el identificador " + id));
+    public LayerDto getLayer(int id) {
+        return mapper.map(repository.findById(id).orElseThrow(() -> new CorpocaldasNotFoundException("No fue encontrada capa asociada" +
+                " con el identificador " + id)), LayerDto.class);
     }
 
     @Override
-    public Layer getLayerByName(String name) {
-        return repository.findByName(name).orElseThrow(() -> new LayerNotFoundException("No fue encontrada capa" +
-                " asociada al nombre " + name));
+    public LayerDto getLayerByName(String name) {
+        return mapper.map(repository.findByName(name).orElseThrow(() -> new CorpocaldasNotFoundException("No fue encontrada capa" +
+                " asociada al nombre " + name)), LayerDto.class);
     }
 
     @Override
-    public boolean deleteLayer(int id) {
-        repository.delete(getLayer(id));
-        return true;
+    public void deleteLayer(int id) {
+        repository.delete(mapper.map(getLayer(id), Layer.class));
     }
 }

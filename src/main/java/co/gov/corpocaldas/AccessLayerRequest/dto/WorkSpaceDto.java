@@ -2,7 +2,6 @@ package co.gov.corpocaldas.AccessLayerRequest.dto;
 
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import com.google.common.base.Preconditions;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,7 @@ public class WorkSpaceDto {
 
     private long id;
     private String name;
-    private String nameParent;
+    private WorkSpaceDto parent;
     private List<WorkSpaceDto> childrens;
 
     public void setName(String name) {

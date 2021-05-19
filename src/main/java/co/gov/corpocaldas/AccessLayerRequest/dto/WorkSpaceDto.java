@@ -18,7 +18,7 @@ public class WorkSpaceDto {
     private String name;
     @JsonBackReference
     private WorkSpaceDto parent;
-    private Long idParent;
+    private long idParent;
     private String nameParent;
     private List<WorkSpaceDto> childrens;
 

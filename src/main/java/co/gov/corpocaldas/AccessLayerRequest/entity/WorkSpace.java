@@ -1,6 +1,5 @@
 package co.gov.corpocaldas.AccessLayerRequest.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +18,6 @@ import javax.persistence.OneToMany;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class WorkSpace {
 
     @Id

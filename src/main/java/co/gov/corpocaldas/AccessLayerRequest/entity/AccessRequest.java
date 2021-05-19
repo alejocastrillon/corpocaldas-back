@@ -26,7 +26,7 @@ import javax.validation.constraints.NotNull;
 public class AccessRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull(message = ModelValidationError.NAME_NULL)
     @NotBlank(message = ModelValidationError.NAME_NULL)

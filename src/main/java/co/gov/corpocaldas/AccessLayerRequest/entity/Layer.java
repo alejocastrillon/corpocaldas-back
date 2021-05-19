@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 public class Layer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "Layer identifier")
     private int id;
     @NotNull(message = ModelValidationError.NAME_LAYER_NULL)

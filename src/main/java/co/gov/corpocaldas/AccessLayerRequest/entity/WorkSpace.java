@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
- * 
+ *
  */
 @Entity
 @Getter
@@ -28,7 +28,6 @@ public class WorkSpace {
     private long id;
     private String name;
     @ManyToOne
-    @JoinColumn(name = "parent", referencedColumnName = "id")
     private WorkSpace parent;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
     private List<WorkSpace> childrens;

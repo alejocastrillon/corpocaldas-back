@@ -21,6 +21,7 @@ public class WorkSpaceDto {
     private Long idParent;
     private String nameParent;
     private List<WorkSpaceDto> childrens;
+    private List<LayerDto> layers;
 
     public void setName(String name) {
         Preconditions.checkNotNull(name, ModelValidationError.WORKSPACE_NAME_NULL);

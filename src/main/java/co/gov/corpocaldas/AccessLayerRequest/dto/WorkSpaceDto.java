@@ -16,7 +16,7 @@ public class WorkSpaceDto {
 
     private long id;
     private String name;
-    private String nameparent;
+    private String nameParent;
     private List<WorkSpaceDto> childrens;
 
     public void setName(String name) {

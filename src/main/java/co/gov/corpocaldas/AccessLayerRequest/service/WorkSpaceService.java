@@ -1,7 +1,6 @@
 package co.gov.corpocaldas.AccessLayerRequest.service;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
-import co.gov.corpocaldas.AccessLayerRequest.dto.ShowWorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.WorkSpaceDto;
 
 /**
@@ -14,7 +13,7 @@ public interface WorkSpaceService {
      * @param workSpace Information of the workspace
      * @return Persisted information of the workspace
      */
-    ShowWorkSpaceDto saveWorkSpace(WorkSpaceDto workSpace);
+    WorkSpaceDto saveWorkSpace(WorkSpaceDto workSpace);
 
     /**
      * Update the information of an specific workspace for searching by its identifier.
@@ -38,7 +37,7 @@ public interface WorkSpaceService {
      * @param workspaceId Identifier of the workspace
      * @return Information of the resultant workspace
      */
-    ShowWorkSpaceDto getWorkspace(long workspaceId);
+    WorkSpaceDto getWorkspace(long workspaceId);
 
     /**
      * Delete the information of an specific workspace for searching by its identifier.

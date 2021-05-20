@@ -2,7 +2,6 @@ package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
-import co.gov.corpocaldas.AccessLayerRequest.dto.ShowWorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.WorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.WorkSpace;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasBadRequestException;
@@ -27,8 +26,8 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
     private final ModelMapper mapper = new ModelMapper();
 
     @Override
-    public ShowWorkSpaceDto saveWorkSpace(WorkSpaceDto workSpace) {
-        return mapper.map(workSpaceRepository.save(mapper.map(workSpace, WorkSpace.class)), ShowWorkSpaceDto.class);
+    public WorkSpaceDto saveWorkSpace(WorkSpaceDto workSpace) {
+        return mapper.map(workSpaceRepository.save(mapper.map(workSpace, WorkSpace.class)), WorkSpaceDto.class);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
         Pageable pageable = PageRequest.of(page, size);
         Page<WorkSpace> pageResult = workSpaceRepository.getAll(name, pageable);
         if (pageResult.hasContent()) {
-            return new PaginatorDto((List<ShowWorkSpaceDto>) Utility.parseList(pageResult.getContent(), ShowWorkSpaceDto.class),
+            return new PaginatorDto((List<WorkSpaceDto>) Utility.parseList(pageResult.getContent(), WorkSpaceDto.class),
                     pageResult.getTotalElements());
         } else {
             return new PaginatorDto();
@@ -54,10 +53,10 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
     }
 
     @Override
-    public ShowWorkSpaceDto getWorkspace(long workspaceId) {
+    public WorkSpaceDto getWorkspace(long workspaceId) {
         return mapper.map(workSpaceRepository.findById(workspaceId).orElseThrow(() ->
                 new CorpocaldasBadRequestException(String.format(ModelValidationError.WORKSPACE_NOT_FOUND,
-                        workspaceId))), ShowWorkSpaceDto.class);
+                        workspaceId))), WorkSpaceDto.class);
     }
 
     @Override

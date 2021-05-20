@@ -35,4 +35,8 @@ public class WorkSpaceDto {
     public String getNameParent() {
         return this.parent != null ? this.parent.getName() : null;
     }
+
+    public void setIdParent(Long idParent) {
+        this.idParent = idParent;
+    }
 }

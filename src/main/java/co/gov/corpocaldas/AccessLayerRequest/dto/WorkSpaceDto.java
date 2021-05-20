@@ -38,7 +38,9 @@ public class WorkSpaceDto {
 
     public void setIdParent(Long idParent) {
         this.idParent = idParent;
-        this.parent = new WorkSpaceDto();
-        this.parent.id = idParent;
+        if (idParent != null) {
+            this.parent = new WorkSpaceDto();
+            this.parent.id = idParent;
+        }
     }
 }

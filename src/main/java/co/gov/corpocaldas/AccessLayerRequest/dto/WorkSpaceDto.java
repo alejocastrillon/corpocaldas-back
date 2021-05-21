@@ -23,11 +23,6 @@ public class WorkSpaceDto {
     private List<WorkSpaceDto> childrens;
     private List<LayerDto> layers;
 
-    public void setName(String name) {
-        Preconditions.checkNotNull(name, ModelValidationError.WORKSPACE_NAME_NULL);
-        this.name = name;
-    }
-
     public Long getIdParent() {
         return this.parent != null ? this.parent.getId() : null;
     }

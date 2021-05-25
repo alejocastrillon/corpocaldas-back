@@ -18,7 +18,6 @@ public class LiteWorkspaceDto {
     private WorkSpaceDto parent;
     private Long idParent;
     private String nameParent;
-    private List<WorkSpaceDto> childrens;
 
     public Long getIdParent() {
         return this.parent != null ? this.parent.getId() : null;

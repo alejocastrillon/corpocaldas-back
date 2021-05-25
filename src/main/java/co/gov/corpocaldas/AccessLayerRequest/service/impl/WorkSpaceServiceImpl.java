@@ -1,6 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
+import co.gov.corpocaldas.AccessLayerRequest.dto.LiteWorkspaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.WorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.WorkSpace;
@@ -45,7 +46,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
         Pageable pageable = PageRequest.of(page, size);
         Page<WorkSpace> pageResult = workSpaceRepository.getAll(name, pageable);
         if (pageResult.hasContent()) {
-            return new PaginatorDto((List<WorkSpaceDto>) Utility.parseList(pageResult.getContent(), WorkSpaceDto.class),
+            return new PaginatorDto((List<LiteWorkspaceDto>) Utility.parseList(pageResult.getContent(), LiteWorkspaceDto.class),
                     pageResult.getTotalElements());
         } else {
             return new PaginatorDto();

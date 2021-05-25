@@ -15,7 +15,7 @@ public class LiteWorkspaceDto {
     private long id;
     private String name;
     @JsonBackReference
-    private WorkSpaceDto parent;
+    private LiteWorkspaceDto parent;
     private Long idParent;
     private String nameParent;
 
@@ -30,7 +30,7 @@ public class LiteWorkspaceDto {
     public void setIdParent(Long idParent) {
         this.idParent = idParent;
         if (idParent != null) {
-            this.parent = new WorkSpaceDto();
+            this.parent = new LiteWorkspaceDto();
             this.parent.id = idParent;
         }
     }

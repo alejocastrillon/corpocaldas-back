@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface WorkSpaceRepository extends JpaRepository<WorkSpace, Long> {
 
-    @Query("SELECT w FROM WorkSpace w WHERE (:name IS NULL OR w.name LIKE %:name%) AND w.parent IS NULL")
+    @Query("SELECT w FROM WorkSpace w INNER JOIN w.childrens c WHERE (:name IS NULL OR w.name LIKE %:name%)" +
+            " AND (:name IS NULL OR c.name LIKE %:name%) AND w.parent IS NULL")
     Page<WorkSpace> getAll(String name, Pageable pageable);
 
 }

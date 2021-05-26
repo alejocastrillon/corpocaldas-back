@@ -46,7 +46,7 @@ public class WorkSpaceDto {
     }
 
     public boolean isHasChildren() {
-        return this.childrens != null && !this.childrens.isEmpty();
+        return (this.childrens != null && !this.childrens.isEmpty()) || (this.layers != null && !this.layers.isEmpty());
     }
 
     public List<ChildWorkSpaceDto> getWorkspaceChildrens() {

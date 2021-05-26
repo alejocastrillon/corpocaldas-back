@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -44,6 +45,13 @@ public class WorkSpaceDto {
     }
 
     public List<ChildWorkSpaceDto> getWorkspaceChildrens() {
-        return (List<ChildWorkSpaceDto>) Utility.parseList(this.childrens, ChildWorkSpaceDto.class);
+        if (this.childrens != null) {
+            List<ChildWorkSpaceDto> childrens = new ArrayList<>();
+            for (WorkSpaceDto workspace: this.childrens) {
+                childrens.add(new ChildWorkSpaceDto(workspace.getId(), workspace.getName()));
+            }
+            return childrens;
+        }
+        return null;
     }
 }

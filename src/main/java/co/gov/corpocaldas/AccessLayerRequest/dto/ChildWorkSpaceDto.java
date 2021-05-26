@@ -11,5 +11,6 @@ public class ChildWorkSpaceDto {
 
     private long id;
     private String name;
+    private boolean hasChildren;
 
 }

@@ -24,6 +24,7 @@ public class WorkSpaceDto {
     private String nameParent;
     @JsonBackReference
     private List<WorkSpaceDto> childrens;
+    private boolean hasChildren;
     private List<ChildWorkSpaceDto> workspaceChildrens;
     private List<LayerDto> layers;
 
@@ -44,11 +45,15 @@ public class WorkSpaceDto {
         }
     }
 
+    public boolean isHasChildren() {
+        return this.childrens != null && !this.childrens.isEmpty();
+    }
+
     public List<ChildWorkSpaceDto> getWorkspaceChildrens() {
         if (this.childrens != null) {
             List<ChildWorkSpaceDto> childrens = new ArrayList<>();
             for (WorkSpaceDto workspace: this.childrens) {
-                childrens.add(new ChildWorkSpaceDto(workspace.getId(), workspace.getName()));
+                childrens.add(new ChildWorkSpaceDto(workspace.getId(), workspace.getName(), workspace.isHasChildren()));
             }
             return childrens;
         }

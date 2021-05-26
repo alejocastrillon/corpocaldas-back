@@ -18,6 +18,9 @@ public class LiteWorkspaceDto {
     private LiteWorkspaceDto parent;
     private Long idParent;
     private String nameParent;
+    @JsonBackReference
+    private List<WorkSpaceDto> childrens;
+    private boolean hasChildren;
 
     public Long getIdParent() {
         return this.parent != null ? this.parent.getId() : null;
@@ -35,4 +38,7 @@ public class LiteWorkspaceDto {
         }
     }
 
+    public boolean isHasChildren() {
+        return this.childrens != null && !this.childrens.isEmpty();
+    }
 }

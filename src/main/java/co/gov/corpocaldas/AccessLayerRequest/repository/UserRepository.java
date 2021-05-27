@@ -2,6 +2,8 @@ package co.gov.corpocaldas.AccessLayerRequest.repository;
 
 import co.gov.corpocaldas.AccessLayerRequest.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -9,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    Optional<User> findByUsernameOrEmail(String value);
-    
+    @Query("SELECT u FROM User u WHERE u.username = :value OR u.email = :value")
+    Optional<User> getUserForLogin(@Param("value") String value);
+
 }

@@ -27,4 +27,21 @@ public class ModelValidationError {
 
     public static final String WORKSPACE_NOT_FOUND = "No se encontró espacio de trabajo con el identificador %d";
 
+    public static final String USER_NAME_NOT_NULL = "El nombre del usuario no puede estar vacío";
+
+    public static final String USER_LASTNAME_NOT_NULL = "El apellido del usuario no puede estar vacío";
+
+    public static final String USER_EMAIL_NOT_NULL = "El correo electrónico del usuario no puede estar vacío";
+
+    public static final String USER_USERNAME_NOT_NULL = "El username del usuario no puede estar vacío";
+
+    public static final String USER_PASSWORD_NOT_NULL = "La contraseña del usuario no puede estar vacía";
+
+    public static final String USER_ROLE_NOT_NULL = "El rol del usuario no puede estar vacío";
+
+    public static final String LOGIN_ACCESS_TOKEN_NULL = "El token de acceso no puede estar vacío";
+
+    public static final String LOGIN_CONNECTION_STARTED_NULL = "El dia y hora en la cual que comenzó la conexión no" +
+            " puede estar vacío";
+
 }

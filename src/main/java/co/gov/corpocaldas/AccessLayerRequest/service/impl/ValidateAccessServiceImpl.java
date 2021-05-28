@@ -1,6 +1,8 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 
+import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import co.gov.corpocaldas.AccessLayerRequest.entity.LoginAccessGranted;
+import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasUnauthorizedException;
 import co.gov.corpocaldas.AccessLayerRequest.repository.LoginAccessGrantedRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,8 @@ public class ValidateAccessServiceImpl implements ValidateAccessService {
     }
 
     @Override
-    public boolean validateAccess(String token, int userId) {
-        Optional<LoginAccessGranted> optionalLoginAccessGranted = loginAccessGrantedRepository
-                .validateAccess(token, userId, new Date());
-        return optionalLoginAccessGranted.isPresent();
+    public void validateAccess(String token, int userId) {
+        loginAccessGrantedRepository.validateAccess(token, userId, new Date()).orElseThrow(
+                () -> new CorpocaldasUnauthorizedException(ModelValidationError.UNAUTHORIZED_REQUEST_MESSAGE));
     }
 }

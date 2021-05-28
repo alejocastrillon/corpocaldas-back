@@ -6,7 +6,9 @@ import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasNotFoundException;
 import co.gov.corpocaldas.AccessLayerRequest.repository.LayerRepository;
+import co.gov.corpocaldas.AccessLayerRequest.repository.LoginAccessGrantedRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
+import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +22,27 @@ import java.util.List;
 @Service
 public class LayerServiceImpl implements LayerService {
 
-    @Autowired
-    private LayerRepository repository;
+    private final LayerRepository repository;
+
+    private final ValidateAccessService validateAccessService;
+
+    public LayerServiceImpl(LayerRepository repository, ValidateAccessService validateAccessService) {
+        this.repository = repository;
+        this.validateAccessService = validateAccessService;
+    }
 
     private final ModelMapper mapper = new ModelMapper();
 
     @Override
-    public LayerDto saveLayer(LayerDto layer) {
+    public LayerDto saveLayer(String token, int userId, LayerDto layer) {
+        validateAccessService.validateAccess(token, userId);
         return mapper.map(repository.save(mapper.map(layer, Layer.class)), LayerDto.class);
     }
 
     @Override
-    public void updateLayer(int layerId, LayerDto layer) {
+    public void updateLayer(String token, int userId, int layerId, LayerDto layer) {
         if (layerId == layer.getId()) {
-            saveLayer(layer);
+            saveLayer(token, userId, layer);
         } else {
             throw new CorpocaldasNotFoundException(ModelValidationError.MISMATCH_ID_MESSAGE);
         }

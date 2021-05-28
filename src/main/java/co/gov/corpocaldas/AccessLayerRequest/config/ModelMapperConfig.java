@@ -1,2 +1,15 @@
-package co.gov.corpocaldas.AccessLayerRequest.config;public class ModelMapperConfig {
+package co.gov.corpocaldas.AccessLayerRequest.config;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ModelMapperConfig {
+
+    @Bean
+    public ModelMapper getMapper() {
+        return new ModelMapper();
+    }
+    
 }

@@ -136,7 +136,10 @@ public class LayerController {
             @ApiResponse(code = 404, message = "No layer was found with this identifier")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteLayer(@ApiParam(value = "Identifier of the layer", required = true) @PathVariable("id") int id) {
+    public ResponseEntity deleteLayer(@RequestHeader(value = "authorization-token", required = false) String token,
+                                      @RequestHeader(value = "authorization-user", required = false) Integer userId,
+                                      @ApiParam(value = "Identifier of the layer", required = true) @PathVariable("id") int id) {
+        validateAccessService.validateAccess(token, userId);
         layerService.deleteLayer(id);
         return ResponseEntity.noContent().build();
     }

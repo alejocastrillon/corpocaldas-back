@@ -35,7 +35,6 @@ public class LoginAccessGranted {
      * Date and time that the login access was requested.
      */
     @NotNull(message = ModelValidationError.LOGIN_CONNECTION_STARTED_NULL)
-    @NotBlank(message = ModelValidationError.LOGIN_CONNECTION_STARTED_NULL)
     private Date connectionStart;
     /**
      * Date and time that the login access was finished.

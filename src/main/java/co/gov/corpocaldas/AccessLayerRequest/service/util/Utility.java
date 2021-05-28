@@ -1,5 +1,8 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.util;
 
+import co.gov.corpocaldas.AccessLayerRequest.config.JasyptConfig;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.modelmapper.ModelMapper;
 
 import java.lang.reflect.Type;
@@ -30,5 +33,19 @@ public abstract class Utility {
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(randomBytes);
         return Base64.getUrlEncoder().encodeToString(randomBytes);
+    }
+
+    public static String encryptKey(String plainKey) {
+        final SimpleStringPBEConfig pbeConfig = JasyptConfig.getSimpleStringPBEConfig();
+        final PooledPBEStringEncryptor pbeStringEncryptor = new PooledPBEStringEncryptor();
+        pbeStringEncryptor.setConfig(pbeConfig);
+        return pbeStringEncryptor.encrypt(plainKey);
+    }
+
+    public static String decryptKey(String encryptedKey) {
+        final SimpleStringPBEConfig pbeConfig = JasyptConfig.getSimpleStringPBEConfig();
+        final PooledPBEStringEncryptor pbeStringEncryptor = new PooledPBEStringEncryptor();
+        pbeStringEncryptor.setConfig(pbeConfig);
+        return pbeStringEncryptor.decrypt(encryptedKey)
     }
 }

@@ -3,6 +3,7 @@ package co.gov.corpocaldas.AccessLayerRequest.controller;
 import co.gov.corpocaldas.AccessLayerRequest.dto.LayerDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
+import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @Api
 public class LayerController {
 
-    @Autowired
-    private LayerService layerService;
+    private final LayerService layerService;
+
+    private final ValidateAccessService validateAccessService;
+
+    public LayerController(LayerService layerService, ValidateAccessService validateAccessService) {
+        this.layerService = layerService;
+        this.validateAccessService = validateAccessService;
+    }
 
     /**
      * Endpoint that persist the information of a layer.
@@ -32,7 +39,8 @@ public class LayerController {
                                               @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                               @ApiParam(value = "Information of the layer", required = true)
                                                @RequestBody LayerDto layer) {
-        return new ResponseEntity<>(layerService.saveLayer(token, userId, layer), HttpStatus.CREATED);
+        validateAccessService.validateAccess(token, userId);
+        return new ResponseEntity<>(layerService.saveLayer(layer), HttpStatus.CREATED);
     }
 
     /**
@@ -54,7 +62,8 @@ public class LayerController {
                                           @PathVariable("layerId") int layerId,
                                       @ApiParam(value = "Updated information of the layer", required = true)
                                           @RequestBody LayerDto layer) {
-        layerService.updateLayer(token, userId, layerId, layer);
+        validateAccessService.validateAccess(token, userId);
+        layerService.updateLayer(layerId, layer);
         return ResponseEntity.noContent().build();
     }
 

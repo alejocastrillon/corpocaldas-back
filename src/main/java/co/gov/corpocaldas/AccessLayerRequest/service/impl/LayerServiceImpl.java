@@ -34,15 +34,14 @@ public class LayerServiceImpl implements LayerService {
     private final ModelMapper mapper = new ModelMapper();
 
     @Override
-    public LayerDto saveLayer(String token, Integer userId, LayerDto layer) {
-        validateAccessService.validateAccess(token, userId);
+    public LayerDto saveLayer(LayerDto layer) {
         return mapper.map(repository.save(mapper.map(layer, Layer.class)), LayerDto.class);
     }
 
     @Override
-    public void updateLayer(String token, Integer userId, int layerId, LayerDto layer) {
+    public void updateLayer(int layerId, LayerDto layer) {
         if (layerId == layer.getId()) {
-            saveLayer(token, userId, layer);
+            saveLayer(layer);
         } else {
             throw new CorpocaldasNotFoundException(ModelValidationError.MISMATCH_ID_MESSAGE);
         }

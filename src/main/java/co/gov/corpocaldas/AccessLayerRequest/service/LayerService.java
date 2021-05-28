@@ -10,7 +10,7 @@ public interface LayerService {
      * @param layer Information of the layer
      * @return Persisted information of the layer
      */
-    LayerDto saveLayer(String token, Integer userId, LayerDto layer);
+    LayerDto saveLayer(LayerDto layer);
 
     /**
      * Update the information of the layer on db.
@@ -18,7 +18,7 @@ public interface LayerService {
      * @param layer Information of the layer
      * @return Update layer's information
      */
-    void updateLayer(String token, Integer userId, int layerId, LayerDto layer);
+    void updateLayer(int layerId, LayerDto layer);
 
     /**
      * Obtain all the information of the layers that are persisted.

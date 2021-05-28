@@ -29,7 +29,7 @@ public class LayerController {
     })
     @PostMapping()
     public ResponseEntity<LayerDto> saveLayer(@RequestHeader("authorization-token") String token,
-                                              @RequestHeader("authorization-user") int userId,
+                                              @RequestHeader("authorization-user") Integer userId,
                                               @ApiParam(value = "Information of the layer", required = true)
                                                @RequestBody LayerDto layer) {
         return new ResponseEntity<>(layerService.saveLayer(token, userId, layer), HttpStatus.CREATED);
@@ -49,7 +49,7 @@ public class LayerController {
     })
     @PutMapping("/{layerId}")
     public ResponseEntity updateLayer(@RequestHeader("authorization-token") String token,
-                                      @RequestHeader("authorization-user") int userId,
+                                      @RequestHeader("authorization-user") Integer userId,
                                       @ApiParam(value = "Identifier of the layer to update", required = true)
                                           @PathVariable("layerId") int layerId,
                                       @ApiParam(value = "Updated information of the layer", required = true)

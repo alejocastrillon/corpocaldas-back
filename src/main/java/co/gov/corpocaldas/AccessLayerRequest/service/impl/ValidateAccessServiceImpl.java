@@ -20,8 +20,13 @@ public class ValidateAccessServiceImpl implements ValidateAccessService {
     }
 
     @Override
-    public void validateAccess(String token, int userId) {
-        loginAccessGrantedRepository.validateAccess(token, userId, new Date()).orElseThrow(
-                () -> new CorpocaldasUnauthorizedException(ModelValidationError.UNAUTHORIZED_REQUEST_MESSAGE));
+    public void validateAccess(String token, Integer userId) {
+        if (token != null && userId != null) {
+            loginAccessGrantedRepository.validateAccess(token, userId, new Date()).orElseThrow(
+                    () -> new CorpocaldasUnauthorizedException(ModelValidationError.UNAUTHORIZED_REQUEST_MESSAGE));
+        } else {
+            throw new CorpocaldasUnauthorizedException(ModelValidationError.UNAUTHORIZED_REQUEST_MESSAGE);
+        }
+
     }
 }

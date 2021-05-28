@@ -7,6 +7,6 @@ public interface ValidateAccessService {
      * @param token Access token
      * @param userId User identifier associated to this access.
      */
-    void validateAccess(String token, int userId);
+    void validateAccess(String token, Integer userId);
 
 }

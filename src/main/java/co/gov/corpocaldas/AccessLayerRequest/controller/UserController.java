@@ -1,5 +1,6 @@
 package co.gov.corpocaldas.AccessLayerRequest.controller;
 
+import co.gov.corpocaldas.AccessLayerRequest.dto.LoginAccessGrantedDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.UserDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.UserService;
@@ -39,6 +40,12 @@ public class UserController {
                                                  @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                                  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         return new ResponseEntity<>(userService.getUsers(name, lastname, email, username, isEnabled, page, size), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginAccessGrantedDto> login(@RequestParam(value = "username") String username,
+                                                       @RequestParam(value = "password") String password) {
+        return new ResponseEntity<>(userService.login(username, password), HttpStatus.OK);
     }
 
 

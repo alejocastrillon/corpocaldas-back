@@ -79,9 +79,9 @@ public class UserServiceImpl implements UserService {
         LoginAccessGranted login = new LoginAccessGranted();
         login.setToken(Utility.generateToken());
         Calendar moment = Calendar.getInstance();
-        login.setConnectionStart(moment);
+        login.setConnectionStart(moment.getTime());
         moment.add(Calendar.HOUR_OF_DAY, 3);
-        login.setConnectionFinished(moment);
+        login.setConnectionFinished(moment.getTime());
         login.setUser(user);
         return mapper.map(loginAccessGrantedRepository.save(login), LoginAccessGrantedDto.class);
     }

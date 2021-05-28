@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -77,7 +78,10 @@ public class UserServiceImpl implements UserService {
                 () -> new CorpocaldasUnauthorizedException(ModelValidationError.USER_OR_PASSWORD_WRONG));
         LoginAccessGranted login = new LoginAccessGranted();
         login.setToken(Utility.generateToken());
-        login.setConnectionStart(new Date());
+        Calendar moment = Calendar.getInstance();
+        login.setConnectionStart(moment);
+        moment.add(Calendar.HOUR_OF_DAY, 3);
+        login.setConnectionFinished(moment);
         login.setUser(user);
         return mapper.map(loginAccessGrantedRepository.save(login), LoginAccessGrantedDto.class);
     }

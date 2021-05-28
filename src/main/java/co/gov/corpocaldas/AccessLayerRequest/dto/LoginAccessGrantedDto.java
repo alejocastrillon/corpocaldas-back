@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * DTO class to handle login access authorized information.
@@ -26,12 +26,12 @@ public class LoginAccessGrantedDto {
      * Date in that connection has started.
      */
     @ApiModelProperty(notes = "Date in that connection has started")
-    private Date connectionStart;
+    private Calendar connectionStart;
     /**
      * Date in that connection has finished.
      */
     @ApiModelProperty(notes = "Date in that connection has finished")
-    private Date connectionFinished;
+    private Calendar connectionFinished;
     /**
      * User identifier associated to the login access.
      */

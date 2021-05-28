@@ -37,7 +37,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
             getWorkspace(workspaceId);
             saveWorkSpace(workSpace);
         } else {
-            throw new CorpocaldasBadRequestException(ModelValidationError.WORKSPACE_MISMATCH_MESSAGE);
+            throw new CorpocaldasBadRequestException(ModelValidationError.MISMATCH_ID_MESSAGE);
         }
     }
 

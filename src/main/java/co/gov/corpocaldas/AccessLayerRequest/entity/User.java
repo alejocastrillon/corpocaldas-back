@@ -61,7 +61,7 @@ public class User {
     @NotBlank(message = ModelValidationError.USER_ROLE_NOT_NULL)
     private String role;
     /**
-     * Determines if the user has enabled.
+     * Determines if the user is enabled.
      */
     private boolean enabled = true;
 

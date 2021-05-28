@@ -1,5 +1,6 @@
 package co.gov.corpocaldas.AccessLayerRequest.exception;
 
+import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -67,4 +68,14 @@ public class AccessLayerExceptionHandler extends ResponseEntityExceptionHandler 
                 details, request.getDescription(false));
         return new ResponseEntity<>(exceptionResponse,HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(value = {CorpocaldasUnauthorizedException.class})
+    public ResponseEntity<ExceptionResponse> handleUnauthorizedRequestException(CorpocaldasUnauthorizedException e, WebRequest webRequest) {
+        List<String> details = new ArrayList<>();
+        details.add(e.getLocalizedMessage());
+        ExceptionResponse exceptionResponse = new ExceptionResponse(ModelValidationError.UNAUTHORIZED_REQUEST_MESSAGE,
+                new Date(), details, webRequest.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
+    }
+
 }

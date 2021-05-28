@@ -1,5 +1,6 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 
+import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import co.gov.corpocaldas.AccessLayerRequest.dto.LayerDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
@@ -34,8 +35,7 @@ public class LayerServiceImpl implements LayerService {
         if (layerId == layer.getId()) {
             saveLayer(layer);
         } else {
-            throw new CorpocaldasNotFoundException("The identifier of the layer provided mismatch with the identifier" +
-                    " that is inside the information");
+            throw new CorpocaldasNotFoundException(ModelValidationError.MISMATCH_ID_MESSAGE);
         }
     }
 

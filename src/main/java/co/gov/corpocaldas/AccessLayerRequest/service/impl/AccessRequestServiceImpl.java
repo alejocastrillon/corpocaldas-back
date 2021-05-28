@@ -51,12 +51,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
                 AccessRequestDto.class);
     }
 
-    private String generateToken() {
-        byte[] randomBytes = new byte[24];
-        SecureRandom secureRandom = new SecureRandom();
-        secureRandom.nextBytes(randomBytes);
-        return Base64.getUrlEncoder().encodeToString(randomBytes);
-    }
+
 
     private void sendNotificationMail(AccessRequestDto accessRequest) throws MessagingException {
         String message = "Cordial Saludo\nPor medio de la presente que su petición de acceso a la capa "
@@ -82,7 +77,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
     public AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest) {
         if (accessRequestId == accessRequest.getId()) {
             if (accessRequest.getToken() == null && accessRequest.getApproved()) {
-                accessRequest.setToken(generateToken());
+                accessRequest.setToken(Utility.generateToken());
                 try {
                     sendNotificationMail(accessRequest);
                 } catch (MessagingException e) {

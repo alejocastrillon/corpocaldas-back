@@ -3,6 +3,7 @@ package co.gov.corpocaldas.AccessLayerRequest.controller;
 import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
+import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,14 @@ import java.util.List;
 @Api
 public class AccessRequestController {
 
-    @Autowired
-    private AccessRequestService accessRequestService;
+    private final AccessRequestService accessRequestService;
+
+    private final ValidateAccessService validateAccessService;
+
+    public AccessRequestController(AccessRequestService accessRequestService, ValidateAccessService validateAccessService) {
+        this.accessRequestService = accessRequestService;
+        this.validateAccessService = validateAccessService;
+    }
 
     /**
      * Endpoint that persist the information of an access request.
@@ -49,8 +56,11 @@ public class AccessRequestController {
     })
     @PutMapping("/{accessRequestId}")
     public ResponseEntity<AccessRequestDto> updateRequestAccess(
+            @RequestHeader(value = "authorization-token", required = false) String token,
+            @RequestHeader(value = "authorization-user", required = false) Integer userId,
             @ApiParam(value = "Identifier of the access request", required = true) @PathVariable("accessRequestId") int accessRequestId,
             @ApiParam(value = "Updated information of the access request", required = true) @RequestBody AccessRequestDto accessRequest) {
+        validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(accessRequestService.updateRequestAccess(accessRequestId, accessRequest), HttpStatus.ACCEPTED);
     }
 
@@ -84,6 +94,8 @@ public class AccessRequestController {
     })
     @GetMapping()
     public ResponseEntity<PaginatorDto> filterAccessRequest(
+            @RequestHeader(value = "authorization-token", required = false) String token,
+            @RequestHeader(value = "authorization-user", required = false) Integer userId,
             @ApiParam(value = "Name of the user that request the access")
             @RequestParam(value = "name", required = false) String name,
             @ApiParam(value = "Name of company or entity associated to request")
@@ -100,6 +112,7 @@ public class AccessRequestController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @ApiParam(value = "Page size", defaultValue = "10")
             @RequestParam(value = "size", defaultValue = "10") int size) {
+        validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layername,
                 layeraccessgranted, layerapproved, page, size), HttpStatus.OK);
     }

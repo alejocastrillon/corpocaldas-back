@@ -46,6 +46,6 @@ public abstract class Utility {
         final SimpleStringPBEConfig pbeConfig = JasyptConfig.getSimpleStringPBEConfig();
         final PooledPBEStringEncryptor pbeStringEncryptor = new PooledPBEStringEncryptor();
         pbeStringEncryptor.setConfig(pbeConfig);
-        return pbeStringEncryptor.decrypt(encryptedKey)
+        return pbeStringEncryptor.decrypt(encryptedKey);
     }
 }

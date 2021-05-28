@@ -33,8 +33,6 @@ public class Layer {
     @NotBlank(message = ModelValidationError.URL_LAYER_NULL)
     @ApiModelProperty(notes = "Layer reference name", required = true)
     private String referenceName;
-    @NotNull(message = ModelValidationError.WORKSPACE_NULL)
-    @NotBlank(message = ModelValidationError.WORKSPACE_NULL)
     @ApiModelProperty(notes = "Workspace associated to the layer", required = true)
     @ManyToOne(optional = false)
     private WorkSpace workspace;

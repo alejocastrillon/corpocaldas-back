@@ -5,6 +5,7 @@ import co.gov.corpocaldas.AccessLayerRequest.repository.LoginAccessGrantedReposi
 import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -19,7 +20,7 @@ public class ValidateAccessServiceImpl implements ValidateAccessService {
     @Override
     public boolean validateAccess(String token, int userId) {
         Optional<LoginAccessGranted> optionalLoginAccessGranted = loginAccessGrantedRepository
-                .findByTokenAndUserId(token, userId);
+                .validateAccess(token, userId, new Date());
         return optionalLoginAccessGranted.isPresent();
     }
 }

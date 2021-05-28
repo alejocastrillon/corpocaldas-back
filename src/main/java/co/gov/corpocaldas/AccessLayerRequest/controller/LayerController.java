@@ -28,8 +28,8 @@ public class LayerController {
             @ApiResponse(code = 400, message = "The information of the layer contains error")
     })
     @PostMapping()
-    public ResponseEntity<LayerDto> saveLayer(@RequestHeader("authorization-token") String token,
-                                              @RequestHeader("authorization-user") Integer userId,
+    public ResponseEntity<LayerDto> saveLayer(@RequestHeader(value = "authorization-token", required = false) String token,
+                                              @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                               @ApiParam(value = "Information of the layer", required = true)
                                                @RequestBody LayerDto layer) {
         return new ResponseEntity<>(layerService.saveLayer(token, userId, layer), HttpStatus.CREATED);
@@ -48,8 +48,8 @@ public class LayerController {
                     " on the path mismatch with the information's identifier")
     })
     @PutMapping("/{layerId}")
-    public ResponseEntity updateLayer(@RequestHeader("authorization-token") String token,
-                                      @RequestHeader("authorization-user") Integer userId,
+    public ResponseEntity updateLayer(@RequestHeader(value = "authorization-token", required = false) String token,
+                                      @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                       @ApiParam(value = "Identifier of the layer to update", required = true)
                                           @PathVariable("layerId") int layerId,
                                       @ApiParam(value = "Updated information of the layer", required = true)

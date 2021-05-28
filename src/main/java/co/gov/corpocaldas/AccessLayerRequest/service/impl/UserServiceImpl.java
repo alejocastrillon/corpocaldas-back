@@ -40,7 +40,9 @@ public class UserServiceImpl implements UserService {
     public UserDto saveUser(UserDto user) {
         if (user.getPassword() != null) {
             user.setPassword(Utility.encryptKey(user.getPassword()));
-            return mapper.map(userRepository.save(mapper.map(user, User.class)), UserDto.class);
+            UserDto saveUser = mapper.map(userRepository.save(mapper.map(user, User.class)), UserDto.class);
+            saveUser.setPassword(null);
+            return saveUser;
         } else {
             throw new CorpocaldasBadRequestException(ModelValidationError.USER_PASSWORD_NOT_NULL);
         }
@@ -71,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginAccessGrantedDto login(String username, String password) {
-        User user = userRepository.getUserForLogin(username, Utility.decryptKey(password)).orElseThrow(
+        User user = userRepository.getUserForLogin(username, Utility.encryptKey(password)).orElseThrow(
                 () -> new CorpocaldasUnauthorizedException(ModelValidationError.USER_OR_PASSWORD_WRONG));
         LoginAccessGranted login = new LoginAccessGranted();
         login.setToken(Utility.generateToken());

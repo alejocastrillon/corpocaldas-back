@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Entity class to handle the information of the login access authorized.
@@ -35,11 +35,11 @@ public class LoginAccessGranted {
      * Date and time that the login access was requested.
      */
     @NotNull(message = ModelValidationError.LOGIN_CONNECTION_STARTED_NULL)
-    private Calendar connectionStart;
+    private Date connectionStart;
     /**
      * Date and time that the login access was finished.
      */
-    private Calendar connectionFinished;
+    private Date connectionFinished;
     /**
      * User associated to the login access authorized.
      */

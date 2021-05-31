@@ -44,21 +44,14 @@ public class WorkSpaceController {
     }
 
     @GetMapping()
-    public ResponseEntity<PaginatorDto> getWorkspaces(
-            @RequestHeader(value = "authorization-token", required = false) String token,
-            @RequestHeader(value = "authorization-user", required = false) Integer userId,
-            @RequestParam(value = "name", required = false) String name,
+    public ResponseEntity<PaginatorDto> getWorkspaces(@RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         return new ResponseEntity<>(workSpaceService.getWorkspaces(name, page, size), HttpStatus.OK);
     }
 
     @GetMapping("/{workspaceId}")
-    public ResponseEntity<WorkSpaceDto> getWorkspace(
-            @RequestHeader(value = "authorization-token", required = false) String token,
-            @RequestHeader(value = "authorization-user", required = false) Integer userId,
-            @PathVariable("workspaceId") long workspaceId) {
-        validateAccessService.validateAccess(token, userId);
+    public ResponseEntity<WorkSpaceDto> getWorkspace(@PathVariable("workspaceId") long workspaceId) {
         return new ResponseEntity<>(workSpaceService.getWorkspace(workspaceId), HttpStatus.OK);
     }
 

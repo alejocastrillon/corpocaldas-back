@@ -29,7 +29,7 @@ public class WorkSpaceController {
             @RequestHeader(value = "authorization-token", required = false) String token,
             @RequestHeader(value = "authorization-user", required = false) Integer userId,
             @RequestBody WorkSpaceDto workspace) {
-        validateAccessService.validateAccess(token, userId);
+        //validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(workSpaceService.saveWorkSpace(workspace), HttpStatus.OK);
     }
 
@@ -38,7 +38,7 @@ public class WorkSpaceController {
                                           @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                           @PathVariable("workspaceId") long workspaceId,
                                           @RequestBody WorkSpaceDto workspace) {
-        validateAccessService.validateAccess(token, userId);
+        //validateAccessService.validateAccess(token, userId);
         workSpaceService.updateWorkSpace(workspaceId, workspace);
         return ResponseEntity.noContent().build();
     }
@@ -59,7 +59,7 @@ public class WorkSpaceController {
     public ResponseEntity deleteWorkspace(@RequestHeader(value = "authorization-token", required = false) String token,
                                           @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                           @PathVariable("workspaceId") long workspaceId) {
-        validateAccessService.validateAccess(token, userId);
+        //validateAccessService.validateAccess(token, userId);
         workSpaceService.deleteWorkspace(workspaceId);
         return ResponseEntity.noContent().build();
     }

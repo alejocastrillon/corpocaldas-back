@@ -60,7 +60,7 @@ public class AccessRequestController {
             @RequestHeader(value = "authorization-user", required = false) Integer userId,
             @ApiParam(value = "Identifier of the access request", required = true) @PathVariable("accessRequestId") int accessRequestId,
             @ApiParam(value = "Updated information of the access request", required = true) @RequestBody AccessRequestDto accessRequest) {
-        validateAccessService.validateAccess(token, userId);
+        //validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(accessRequestService.updateRequestAccess(accessRequestId, accessRequest), HttpStatus.ACCEPTED);
     }
 
@@ -112,7 +112,7 @@ public class AccessRequestController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @ApiParam(value = "Page size", defaultValue = "10")
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        validateAccessService.validateAccess(token, userId);
+        //validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layername,
                 layeraccessgranted, layerapproved, page, size), HttpStatus.OK);
     }

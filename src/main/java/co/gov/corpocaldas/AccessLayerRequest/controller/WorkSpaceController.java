@@ -50,7 +50,6 @@ public class WorkSpaceController {
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(workSpaceService.getWorkspaces(name, page, size), HttpStatus.OK);
     }
 

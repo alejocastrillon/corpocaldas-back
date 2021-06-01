@@ -83,7 +83,6 @@ public class UserServiceImpl implements UserService {
         moment.add(Calendar.HOUR_OF_DAY, 3);
         login.setConnectionFinished(moment.getTime());
         login.setUser(user);
-        login.setRole(user.getRole());
         return mapper.map(loginAccessGrantedRepository.save(login), LoginAccessGrantedDto.class);
     }
 

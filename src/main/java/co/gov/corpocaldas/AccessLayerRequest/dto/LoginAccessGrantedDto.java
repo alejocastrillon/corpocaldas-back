@@ -42,6 +42,6 @@ public class LoginAccessGrantedDto {
      * Role associated at user.
      */
     @ApiModelProperty(notes = "Role associated at user")
-    private String role;
+    private String userRole;
 
 }

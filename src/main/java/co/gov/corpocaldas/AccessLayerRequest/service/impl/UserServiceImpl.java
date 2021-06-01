@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
         Date moment = new Date();
         LoginAccessGranted loginAccessGranted = loginAccessGrantedRepository.validateAccess(token, userId, moment)
                 .orElseThrow(() -> new CorpocaldasUnauthorizedException(ModelValidationError.UNAUTHORIZED_REQUEST_MESSAGE));
-        optionalLoginAccessGranted.setConnectionFinished(moment);
+        loginAccessGranted.setConnectionFinished(moment);
         loginAccessGrantedRepository.save(loginAccessGranted);
     }
 

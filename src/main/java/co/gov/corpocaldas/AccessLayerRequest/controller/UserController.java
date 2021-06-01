@@ -67,5 +67,5 @@ public class UserController {
         userService.logout(token, userId);
         return ResponseEntity.noContent().build();
     }
-    
+
 }

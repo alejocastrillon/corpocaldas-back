@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -84,6 +85,15 @@ public class UserServiceImpl implements UserService {
         login.setConnectionFinished(moment.getTime());
         login.setUser(user);
         return mapper.map(loginAccessGrantedRepository.save(login), LoginAccessGrantedDto.class);
+    }
+
+    @Override
+    public void logout(String token, Integer userId) {
+        Date moment = new Date();
+        LoginAccessGranted loginAccessGranted = loginAccessGrantedRepository.validateAccess(token, userId, moment)
+                .orElseThrow(() -> new CorpocaldasUnauthorizedException(ModelValidationError.UNAUTHORIZED_REQUEST_MESSAGE));
+        optionalLoginAccessGranted.setConnectionFinished(moment);
+        loginAccessGrantedRepository.save(loginAccessGranted);
     }
 
     @Override

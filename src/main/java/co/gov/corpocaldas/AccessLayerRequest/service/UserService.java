@@ -46,6 +46,13 @@ public interface UserService {
     LoginAccessGrantedDto login(String username, String password);
 
     /**
+     * Logout method.
+     * @param token Access token
+     * @param userId User identifier associated at access token
+     */
+    void logout(String token, Integer userId);
+
+    /**
      * Get the information of a specific user.
      * @param userId User identifier
      * @return User's information

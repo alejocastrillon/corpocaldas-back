@@ -61,5 +61,11 @@ public class UserController {
         return new ResponseEntity<>(userService.login(username, password), HttpStatus.OK);
     }
 
-
+    @GetMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestHeader("authorization-token") String token,
+                                       @RequestHeader("authorization-user") Integer userId) {
+        userService.logout(token, userId);
+        return ResponseEntity.noContent().build();
+    }
+    
 }

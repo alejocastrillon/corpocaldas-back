@@ -11,5 +11,4 @@ public class SaveWorkSpaceDto {
     private long id;
     private String name;
     private Long idParent;
-    private String nameParent;
 }

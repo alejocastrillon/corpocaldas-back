@@ -54,9 +54,9 @@ public class AccessRequestServiceImpl implements AccessRequestService {
 
 
     private void sendNotificationMail(AccessRequestDto accessRequest) throws MessagingException {
-        String message = "Cordial Saludo\nPor medio de la presente que su petición de acceso a la capa "
+        String message = "Cordial Saludo<br><br>Por medio de la presente que su petición de acceso a la capa "
                 + accessRequest.getNameLayer() + " ha sido aprobada, con el token " + accessRequest.getToken()
-                + "\nMuchas gracias por la atención prestada\n<b><i>La información geográfica a descargar pertenece a otras" +
+                + "<br><br>Muchas gracias por la atención prestada<br><b><i>La información geográfica a descargar pertenece a otras" +
                 " instituciones diferentes a CORPOCALDAS y  por ende la propiedad intelectual y derechos de autor. Si" +
                 " se tiene alguna inquietud frente al contenido técnico de la cobertura geográfica, se requiere una" +
                 " versión actualizada o histórica, se debe remitir directamente a la fuente oficial del dato, la cual" +

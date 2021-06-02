@@ -10,5 +10,5 @@ import lombok.Setter;
 public class SaveWorkSpaceDto {
     private long id;
     private String name;
-    private Long idParent;
+    private Long parentId;
 }

@@ -60,7 +60,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
                 " instituciones diferentes a CORPOCALDAS y  por ende la propiedad intelectual y derechos de autor. Si" +
                 " se tiene alguna inquietud frente al contenido técnico de la cobertura geográfica, se requiere una" +
                 " versión actualizada o histórica, se debe remitir directamente a la fuente oficial del dato, la cual" +
-                " se detalla en el metadato respectivo.</b></i>";
+                " se detalla en el metadato respectivo.</i></b>";
         MimeMessage mail = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mail, true);
         messageHelper.setTo(accessRequest.getEmail());

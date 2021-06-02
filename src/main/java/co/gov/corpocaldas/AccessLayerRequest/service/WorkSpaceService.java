@@ -23,7 +23,7 @@ public interface WorkSpaceService {
      * @return Updated workspace's information
      */
     void updateWorkSpace(long workspaceId, SaveWorkSpaceDto workSpace);
-    
+
     /**
      * Obtain all the information of the workspaces and apply filter on the name field.
      * @param name Field name value

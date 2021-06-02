@@ -62,7 +62,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
                 " versión actualizada o histórica, se debe remitir directamente a la fuente oficial del dato, la cual" +
                 " se detalla en el metadato respectivo.</b></i>";
         MimeMessage mail = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mail, false);
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mail, true);
         messageHelper.setTo(accessRequest.getEmail());
         messageHelper.setSubject("Petición de acceso aproabada a la capa " + accessRequest.getNameLayer()
                 + " - Corpocaldas");

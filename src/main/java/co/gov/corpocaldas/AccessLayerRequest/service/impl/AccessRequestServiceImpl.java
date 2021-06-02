@@ -64,9 +64,9 @@ public class AccessRequestServiceImpl implements AccessRequestService {
         MimeMessage mail = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mail, true);
         messageHelper.setTo(accessRequest.getEmail());
-        messageHelper.setSubject("Petición de acceso aproabada a la capa " + accessRequest.getNameLayer()
+        messageHelper.setSubject("Petición de acceso aprobada a la capa " + accessRequest.getNameLayer()
                 + " - Corpocaldas");
-        messageHelper.setText(message);
+        messageHelper.setText(message, true);
         mailSender.send(mail);
     }
 

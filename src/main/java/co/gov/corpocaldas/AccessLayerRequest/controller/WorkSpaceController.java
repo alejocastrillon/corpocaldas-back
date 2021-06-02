@@ -1,6 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.controller;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
+import co.gov.corpocaldas.AccessLayerRequest.dto.SaveWorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.WorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import co.gov.corpocaldas.AccessLayerRequest.service.WorkSpaceService;
@@ -28,7 +29,7 @@ public class WorkSpaceController {
     public ResponseEntity<WorkSpaceDto> saveWorkspace(
             @RequestHeader(value = "authorization-token", required = false) String token,
             @RequestHeader(value = "authorization-user", required = false) Integer userId,
-            @RequestBody WorkSpaceDto workspace) {
+            @RequestBody SaveWorkSpaceDto workspace) {
         //validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(workSpaceService.saveWorkSpace(workspace), HttpStatus.OK);
     }
@@ -37,7 +38,7 @@ public class WorkSpaceController {
     public ResponseEntity updateWorkspace(@RequestHeader(value = "authorization-token", required = false) String token,
                                           @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                           @PathVariable("workspaceId") long workspaceId,
-                                          @RequestBody WorkSpaceDto workspace) {
+                                          @RequestBody SaveWorkSpaceDto workspace) {
         //validateAccessService.validateAccess(token, userId);
         workSpaceService.updateWorkSpace(workspaceId, workspace);
         return ResponseEntity.noContent().build();

@@ -3,6 +3,7 @@ package co.gov.corpocaldas.AccessLayerRequest.service.impl;
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import co.gov.corpocaldas.AccessLayerRequest.dto.LiteWorkspaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
+import co.gov.corpocaldas.AccessLayerRequest.dto.SaveWorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.WorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.WorkSpace;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasBadRequestException;
@@ -27,12 +28,12 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
     private final ModelMapper mapper = new ModelMapper();
 
     @Override
-    public WorkSpaceDto saveWorkSpace(WorkSpaceDto workSpace) {
+    public WorkSpaceDto saveWorkSpace(SaveWorkSpaceDto workSpace) {
         return mapper.map(workSpaceRepository.save(mapper.map(workSpace, WorkSpace.class)), WorkSpaceDto.class);
     }
 
     @Override
-    public void updateWorkSpace(long workspaceId, WorkSpaceDto workSpace) {
+    public void updateWorkSpace(long workspaceId, SaveWorkSpaceDto workSpace) {
         if (workspaceId == workSpace.getId()) {
             getWorkspace(workspaceId);
             saveWorkSpace(workSpace);

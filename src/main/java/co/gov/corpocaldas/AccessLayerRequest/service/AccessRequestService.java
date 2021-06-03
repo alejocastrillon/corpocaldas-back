@@ -25,23 +25,6 @@ public interface AccessRequestService {
      */
     AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest) throws MessagingException;
 
-    /**
-     * Validate that the access token is enable to access to a specific layer and these are associated to the user
-     * email.
-     *
-     * @param layerId Identifier of the layer
-     * @param email   User's email
-     * @param token   Access token
-     * @return Transaction state
-     */
-    AccessRequestDto validateAccess(int layerId, String email, String token);
-
-    /**
-     * Obtains the request access that need to be reviewed for generate a token access.
-     *
-     * @return List of request access to be reviewed
-     */
-    List<AccessRequestDto> requestWaitingForApproval();
 
     /**
      * Filter the access request by the params selected.

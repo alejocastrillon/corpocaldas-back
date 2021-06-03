@@ -60,25 +60,9 @@ public class AccessRequestController {
             @RequestHeader(value = "authorization-token", required = false) String token,
             @RequestHeader(value = "authorization-user", required = false) Integer userId,
             @ApiParam(value = "Identifier of the access request", required = true) @PathVariable("accessRequestId") int accessRequestId,
-            @ApiParam(value = "Updated information of the access request", required = true) @RequestBody AccessRequestDto accessRequest) {
+            @ApiParam(value = "Updated information of the access request", required = true) @RequestBody AccessRequestDto accessRequest) throws MessagingException {
         //validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(accessRequestService.updateRequestAccess(accessRequestId, accessRequest), HttpStatus.ACCEPTED);
-    }
-
-    /**
-     * Endpoint that returns the access request that are associated at layer with access granted equals to three
-     * (private layer) and are waiting for approval.
-     * @return List of access requests that waiting for approval
-     */
-    @ApiOperation(value = "Endpoint that returns the access request that are associated at layer with access granted" +
-            " equals to three (private layer) and are waiting for approval", response = AccessRequestDto.class,
-            responseContainer = "List<>")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "The access requests that are waiting for approval was obtained successfully")
-    })
-    @GetMapping("/waiting-for-approval")
-    public ResponseEntity<List<AccessRequestDto>> getRequestWaitingForApproval() {
-        return new ResponseEntity<>(accessRequestService.requestWaitingForApproval(), HttpStatus.OK);
     }
 
     /**

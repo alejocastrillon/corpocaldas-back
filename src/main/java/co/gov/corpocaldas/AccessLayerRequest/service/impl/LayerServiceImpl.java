@@ -4,6 +4,7 @@ import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import co.gov.corpocaldas.AccessLayerRequest.dto.LayerDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
+import co.gov.corpocaldas.AccessLayerRequest.entity.WorkSpace;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasNotFoundException;
 import co.gov.corpocaldas.AccessLayerRequest.repository.LayerRepository;
 import co.gov.corpocaldas.AccessLayerRequest.repository.LoginAccessGrantedRepository;
@@ -42,12 +43,13 @@ public class LayerServiceImpl implements LayerService {
     @Override
     public LayerDto saveLayer(Integer id, String name, String referenceName, int idWorkspace, int accessGranted,
                               boolean visible, MultipartFile file) {
-        Layer layer = new Layer();
+        LayerDto layer = new Layer();
         if (id != null) {
             layer.setId(id);
         }
         layer.setName(name);
         layer.setReferenceName(referenceName);
+        WorkSpace workSpace = new WorkSpace();
         layer.setIdWorkspace(idWorkspace);
         layer.setAccessGranted(accessGranted);
         if (id == null) {
@@ -60,7 +62,7 @@ public class LayerServiceImpl implements LayerService {
                 layer.setMetadataUrl(layerUpload.getMetadataUrl());
             }
         }
-        return mapper.map(repository.save(layer), LayerDto.class);
+        return mapper.map(repository.save(mapper.map(layer, Layer.class)), LayerDto.class);
     }
 
     @Override

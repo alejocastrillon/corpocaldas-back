@@ -23,7 +23,7 @@ public interface AccessRequestService {
      * @param accessRequest   Information of the access request
      * @return Updated information of the access request
      */
-    AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest);
+    AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest) throws MessagingException;
 
     /**
      * Validate that the access token is enable to access to a specific layer and these are associated to the user

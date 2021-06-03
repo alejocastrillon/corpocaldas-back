@@ -79,40 +79,13 @@ public class AccessRequestServiceImpl implements AccessRequestService {
      * @return Updated information of the access request
      */
     @Override
-    public AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest) {
+    public AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest) throws MessagingException {
         if (accessRequestId == accessRequest.getId()) {
             return saveRequestAccess(accessRequest);
         } else {
             throw new CorpocaldasBadRequestException("El identificador proveido no coincide con el identificador de" +
                     " la petición de acceso que quiere modificar");
         }
-    }
-
-    /**
-     * Validate that the access token is enable to access to a specific layer and these are associated to the user
-     * email.
-     *
-     * @param layerId Identifier of the layer
-     * @param email   User's email
-     * @param token   Access token
-     * @return Transaction state
-     */
-    @Override
-    public AccessRequestDto validateAccess(int layerId, String email, String token) {
-        return mapper.map(accessRequestRepository.findByEmailAndTokenAndLayerIdAndApprovedTrue(email, token, layerId).orElseGet(() -> {
-            throw new TokenMismatch("El token proveido no hizo match para la capa " + layerId);
-        }), AccessRequestDto.class);
-    }
-
-    /**
-     * Obtains the request access that need to be reviewed for generate a token access.
-     *
-     * @return List of request access to be reviewed
-     */
-    @Override
-    public List<AccessRequestDto> requestWaitingForApproval() {
-        return (List<AccessRequestDto>) Utility.parseList(accessRequestRepository
-                .findByLayerAccessGrantedAndApprovedIsNull(3), AccessRequestDto.class);
     }
 
     @Override

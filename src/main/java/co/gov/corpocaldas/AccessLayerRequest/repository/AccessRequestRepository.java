@@ -20,10 +20,6 @@ public interface AccessRequestRepository extends JpaRepository<AccessRequest, In
             " AND (:layeraccessgranted IS NULL OR a.layer.accessGranted = :layeraccessgranted)")
     Page<AccessRequest> getAll(@Param("name") String name, @Param("company") String company,
                                @Param("email") String email, @Param("layername") String layername,
-                               @Param("layeraccessgranted") Integer layeraccessgranted);
-
-    Optional<AccessRequest> findByEmailAndTokenAndLayerIdAndApprovedTrue(String email, String token, int layerId);
-
-    List<AccessRequest> findByLayerAccessGrantedAndApprovedIsNull(int accessGranted);
+                               @Param("layeraccessgranted") Integer layeraccessgranted, Pageable pageable);
 
 }

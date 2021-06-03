@@ -99,25 +99,5 @@ public class AccessRequestController {
         return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layername,
                 layeraccessgranted, page, size), HttpStatus.OK);
     }
-
-    /**
-     * Endpoint that verify the access to private layer through token, email and layer identifier.
-     * @param layerId Layer identifier
-     * @param accessToken Access token provided by the platform
-     * @param email Email of the user that requesting the token
-     * @return Response entity with the result of verification
-     */
-    @ApiOperation(value = "Endpoint that verify the access to private layer through token, email and layer identifier",
-        response = Boolean.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 202, message = "The verification was successful"),
-            @ApiResponse(code = 401, message = "The data provided for verification is wrong")
-    })
-    @PostMapping("/validate-access")
-    public ResponseEntity<AccessRequestDto> validateAccess(
-            @ApiParam(value = "Layer identifier", required = true) @RequestParam("layerId") int layerId,
-            @ApiParam(value = "Access token provided by the platform", required = true) @RequestParam("accessToken") String accessToken,
-            @ApiParam(value = "Email of the user that requesting the token", required = true) @RequestParam("email") String email) {
-        return new ResponseEntity<>(accessRequestService.validateAccess(layerId, email, accessToken), HttpStatus.ACCEPTED);
-    }
+    
 }

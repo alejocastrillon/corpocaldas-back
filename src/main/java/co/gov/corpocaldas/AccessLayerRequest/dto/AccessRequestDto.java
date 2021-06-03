@@ -35,10 +35,6 @@ public class AccessRequestDto {
     private String nameLayer;
     @ApiModelProperty(notes = "Layer access granted")
     private int accessGrantedLayer;
-    @ApiModelProperty(notes = "Token generated and provided by the platform")
-    private String token;
-    @ApiModelProperty(notes = "Determine if the access request has been approved")
-    private Boolean approved;
 
     public void setName(String name) {
         Preconditions.checkNotNull(name, ModelValidationError.NAME_NULL);

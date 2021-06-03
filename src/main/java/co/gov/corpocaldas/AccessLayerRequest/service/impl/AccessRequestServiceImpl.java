@@ -46,7 +46,8 @@ public class AccessRequestServiceImpl implements AccessRequestService {
      * @return Persisted information of the access request
      */
     @Override
-    public AccessRequestDto saveRequestAccess(AccessRequestDto accessRequest) {
+    public AccessRequestDto saveRequestAccess(AccessRequestDto accessRequest) throws MessagingException {
+        sendNotificationMail(accessRequest);
         return mapper.map(accessRequestRepository.save(mapper.map(accessRequest, AccessRequest.class)),
                 AccessRequestDto.class);
     }
@@ -55,7 +56,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
 
     private void sendNotificationMail(AccessRequestDto accessRequest) throws MessagingException {
         String message = "Cordial Saludo<br><br>Por medio de la presente que su petición de acceso a la capa "
-                + accessRequest.getNameLayer() + " ha sido aprobada, con el token " + accessRequest.getToken()
+                + accessRequest.getNameLayer() + " ha sido aprobada "
                 + "<br><br>Muchas gracias por la atención prestada<br><b><i>La información geográfica a descargar pertenece a otras" +
                 " instituciones diferentes a CORPOCALDAS y  por ende la propiedad intelectual y derechos de autor. Si" +
                 " se tiene alguna inquietud frente al contenido técnico de la cobertura geográfica, se requiere una" +
@@ -80,14 +81,6 @@ public class AccessRequestServiceImpl implements AccessRequestService {
     @Override
     public AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest) {
         if (accessRequestId == accessRequest.getId()) {
-            if (accessRequest.getToken() == null && accessRequest.getApproved()) {
-                accessRequest.setToken(Utility.generateToken());
-                try {
-                    sendNotificationMail(accessRequest);
-                } catch (MessagingException e) {
-                    throw new MailSenderException("The mail could not be sent to " + accessRequest.getEmail());
-                }
-            }
             return saveRequestAccess(accessRequest);
         } else {
             throw new CorpocaldasBadRequestException("El identificador proveido no coincide con el identificador de" +
@@ -124,11 +117,10 @@ public class AccessRequestServiceImpl implements AccessRequestService {
 
     @Override
     public PaginatorDto filterAccessRequests(String name, String company, String email, String layername,
-                                             Integer layeraccessgranted, Boolean layerapproved, int numberPage,
-                                             int pageSize) {
+                                             Integer layeraccessgranted, int numberPage, int pageSize) {
         Pageable pageable = PageRequest.of(numberPage, pageSize);
         Page<AccessRequest> pageResult = accessRequestRepository.getAll(name, company, email, layername,
-                layeraccessgranted, layerapproved, pageable);
+                layeraccessgranted, pageable);
         if (pageResult.hasContent()) {
             //return (List<AccessRequestDto>) utility.parseList(pageResult.getContent(), AccessRequestDto.class);
             return new PaginatorDto((List<AccessRequestDto>) Utility.parseList(pageResult.getContent(),

@@ -42,7 +42,5 @@ public class AccessRequest {
     private String description;
     @ManyToOne(optional = false)
     private Layer layer;
-    private String token;
-    private Boolean approved;
 
 }

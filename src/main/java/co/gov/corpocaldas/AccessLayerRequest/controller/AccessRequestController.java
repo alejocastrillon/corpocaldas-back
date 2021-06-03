@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,7 @@ public class AccessRequestController {
     })
     @PostMapping()
     public ResponseEntity<AccessRequestDto> saveRequestAccess(
-            @ApiParam(value = "Information of access request", required = true) @RequestBody AccessRequestDto accessRequest) {
+            @ApiParam(value = "Information of access request", required = true) @RequestBody AccessRequestDto accessRequest) throws MessagingException {
         return new ResponseEntity<>(accessRequestService.saveRequestAccess(accessRequest), HttpStatus.CREATED);
     }
 
@@ -106,15 +107,13 @@ public class AccessRequestController {
             @RequestParam(value = "layername", required = false) String layername,
             @ApiParam(value = "Layer access granted associated to request")
             @RequestParam(value = "access_granted", required = false) Integer layeraccessgranted,
-            @ApiParam(value = "Determine if the access request has been approved or disapproved")
-            @RequestParam(value = "approved", required = false) Boolean layerapproved,
             @ApiParam(value = "Page number", defaultValue = "0")
             @RequestParam(value = "page", defaultValue = "0") int page,
             @ApiParam(value = "Page size", defaultValue = "10")
             @RequestParam(value = "size", defaultValue = "10") int size) {
         //validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(accessRequestService.filterAccessRequests(name, company, email, layername,
-                layeraccessgranted, layerapproved, page, size), HttpStatus.OK);
+                layeraccessgranted, page, size), HttpStatus.OK);
     }
 
     /**

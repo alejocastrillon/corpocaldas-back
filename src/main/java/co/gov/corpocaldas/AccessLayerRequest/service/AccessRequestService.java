@@ -3,6 +3,7 @@ package co.gov.corpocaldas.AccessLayerRequest.service;
 import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 public interface AccessRequestService {
@@ -13,7 +14,7 @@ public interface AccessRequestService {
      * @param accessRequest Information of the access request
      * @return Persisted information of the access request
      */
-    AccessRequestDto saveRequestAccess(AccessRequestDto accessRequest);
+    AccessRequestDto saveRequestAccess(AccessRequestDto accessRequest) throws MessagingException;
 
     /**
      * Update the information of a specific access request.
@@ -49,12 +50,11 @@ public interface AccessRequestService {
      * @param email Email of the user that request the access
      * @param layername Layer name associated to request
      * @param layeraccessgranted Layer access granted associated to request
-     * @param layerapproved Determine if the access request has been approved or disapproved
      * @param numberPage Number of page
      * @param pageSize Size of page
      * @return Access request list
      */
     PaginatorDto filterAccessRequests(String name, String company, String email, String layername,
-                                      Integer layeraccessgranted, Boolean layerapproved, int numberPage, int pageSize);
+                                      Integer layeraccessgranted, int numberPage, int pageSize);
 
 }

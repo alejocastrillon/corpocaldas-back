@@ -52,5 +52,6 @@ public class LayerDto {
      */
     @ApiModelProperty(notes = "Determines if the layer is visible", required = true)
     private boolean visible;
+    private String metadataUrl;
 
 }

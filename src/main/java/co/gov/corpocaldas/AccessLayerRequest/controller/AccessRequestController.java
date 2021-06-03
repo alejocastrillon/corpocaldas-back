@@ -35,7 +35,7 @@ public class AccessRequestController {
     @ApiOperation(value = "Endpoint that persist the information of an access request", response = AccessRequestDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "The information of access request was persisted successfully"),
-            @ApiResponse(code = 400, message = "The information of access request is invalid ")
+            @ApiResponse(code = 400, message = "The information of access request is invalid")
     })
     @PostMapping()
     public ResponseEntity<AccessRequestDto> saveRequestAccess(

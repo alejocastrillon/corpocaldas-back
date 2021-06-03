@@ -2,6 +2,7 @@ package co.gov.corpocaldas.AccessLayerRequest.service;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.LayerDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface LayerService {
 
@@ -10,7 +11,8 @@ public interface LayerService {
      * @param layer Information of the layer
      * @return Persisted information of the layer
      */
-    LayerDto saveLayer(LayerDto layer);
+    LayerDto saveLayer(Integer id, String name, String referenceName, int idWorkspace, int accessGranted,
+                       boolean visible, MultipartFile metada);
 
     /**
      * Update the information of the layer on db.
@@ -18,7 +20,8 @@ public interface LayerService {
      * @param layer Information of the layer
      * @return Update layer's information
      */
-    void updateLayer(int layerId, LayerDto layer);
+    void updateLayer(int layerId, int id, String name, String referenceName, int idWokspace, int accessGranted,
+                     boolean visible, MultipartFile file);
 
     /**
      * Obtain all the information of the layers that are persisted.

@@ -41,6 +41,7 @@ public class Layer {
     private int accessGranted;
     @ApiModelProperty(notes = "Determines if the layer is visible", required = true)
     private boolean visible = true;
+    private String metadataUrl;
 
     public void setName(String name) {
         Preconditions.checkNotNull(name, ModelValidationError.NAME_LAYER_NULL);

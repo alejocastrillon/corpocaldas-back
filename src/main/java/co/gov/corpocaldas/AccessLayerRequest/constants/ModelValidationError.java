@@ -31,6 +31,14 @@ public class ModelValidationError {
 
     public static final String UNAUTHORIZED_REQUEST_MESSAGE = "Petición no autorizada";
 
+    public static final String FILE_COPY_EXCEPTION_MESSAGE = "No se pudo copiar el archivo en la carpeta";
+
+    public static final String FILE_NAME_NULL_EXCEPTION_MESSAGE = "El nombre del archivo no debe estar vacío";
+
+    public static final String FILE_NOT_FOUND_EXCEPTION_MESSAGE = "El archivo solicitado no existe";
+
+    public static final String FILE_EMPTY_EXCEPTION_MESSAGE = "No se puede subir un archivo vacio";
+
     public static final String USER_OR_PASSWORD_WRONG = "Nombre de usuario o contraseña incorrectas";
 
     public static final String USER_NAME_NOT_NULL = "El nombre del usuario no puede estar vacío";

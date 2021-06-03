@@ -8,6 +8,7 @@ import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasNot
 import co.gov.corpocaldas.AccessLayerRequest.repository.LayerRepository;
 import co.gov.corpocaldas.AccessLayerRequest.repository.LoginAccessGrantedRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
+import co.gov.corpocaldas.AccessLayerRequest.service.RecursoService;
 import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,22 +28,46 @@ public class LayerServiceImpl implements LayerService {
 
     private final ValidateAccessService validateAccessService;
 
-    public LayerServiceImpl(LayerRepository repository, ValidateAccessService validateAccessService) {
+    private final RecursoService recursoService;
+
+    public LayerServiceImpl(LayerRepository repository, ValidateAccessService validateAccessService,
+                            RecursoService recursoService) {
         this.repository = repository;
         this.validateAccessService = validateAccessService;
+        this.recursoService = recursoService;
     }
 
     private final ModelMapper mapper = new ModelMapper();
 
     @Override
-    public LayerDto saveLayer(LayerDto layer) {
-        return mapper.map(repository.save(mapper.map(layer, Layer.class)), LayerDto.class);
+    public LayerDto saveLayer(Integer id, String name, String referenceName, int idWorkspace, int accessGranted,
+                              boolean visible, MultipartFile file) {
+        Layer layer = new Layer();
+        if (id != null) {
+            layer.setId(id);
+        }
+        layer.setName(name);
+        layer.setReferenceName(referenceName);
+        layer.setIdWorkspace(idWorkspace);
+        layer.setAccessGranted(accessGranted);
+        if (id == null) {
+            layer.setMetadataUrl(recursoService.uploadFile(file));
+        } else {
+            LayerDto layerUpload = getLayer(id);
+            if (file != null) {
+                layer.setMetadataUrl(recursoService.uploadFile(file));
+            } else {
+                layer.setMetadataUrl(layerUpload.getMetadataUrl());
+            }
+        }
+        return mapper.map(repository.save(layer), LayerDto.class);
     }
 
     @Override
-    public void updateLayer(int layerId, LayerDto layer) {
+    public void updateLayer(int layerId, int id, String name, String referenceName, int idWokspace, int accessGranted,
+                            boolean visible, MultipartFile file) {
         if (layerId == layer.getId()) {
-            saveLayer(layer);
+            saveLayer(id, name, referenceName, idWokspace, accessGranted, visible, file);
         } else {
             throw new CorpocaldasNotFoundException(ModelValidationError.MISMATCH_ID_MESSAGE);
         }

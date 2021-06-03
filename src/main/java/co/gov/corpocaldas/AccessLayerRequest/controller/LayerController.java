@@ -8,6 +8,7 @@ import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("${api.base.url}/layers")
@@ -36,10 +37,15 @@ public class LayerController {
     @PostMapping()
     public ResponseEntity<LayerDto> saveLayer(@RequestHeader(value = "authorization-token", required = false) String token,
                                               @RequestHeader(value = "authorization-user", required = false) Integer userId,
-                                              @ApiParam(value = "Information of the layer", required = true)
-                                               @RequestBody LayerDto layer) {
-        //validateAccessService.validateAccess(token, userId);
-        return new ResponseEntity<>(layerService.saveLayer(layer), HttpStatus.CREATED);
+                                              @RequestParam("name") String name,
+                                              @RequestParam("reference_name") String referenceName,
+                                              @RequestParam("id_workspace") int idWorkspace,
+                                              @RequestParam("access_granted") int accessGranted,
+                                              @RequestParam("visible") boolean visible,
+                                              @RequestParam("metadata")MultipartFile file) {
+        validateAccessService.validateAccess(token, userId);
+        return new ResponseEntity<>(layerService.saveLayer(null, name, referenceName, idWorkspace, accessGranted,
+                visible, file), HttpStatus.CREATED);
     }
 
     /**
@@ -59,10 +65,14 @@ public class LayerController {
                                       @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                       @ApiParam(value = "Identifier of the layer to update", required = true)
                                           @PathVariable("layerId") int layerId,
-                                      @ApiParam(value = "Updated information of the layer", required = true)
-                                          @RequestBody LayerDto layer) {
-        //validateAccessService.validateAccess(token, userId);
-        layerService.updateLayer(layerId, layer);
+                                      @RequestParam("id") int id, @RequestParam("name") String name,
+                                      @RequestParam("reference_name") String referenceName,
+                                      @RequestParam("id_workspace") int idWorkspace,
+                                      @RequestParam("access_granted") int accessGranted,
+                                      @RequestParam("visible") boolean visible,
+                                      @RequestParam(value ="metadata", required = false) MultipartFile file) {
+        validateAccessService.validateAccess(token, userId);
+        layerService.updateLayer(layerId, id, name, referenceName, idWorkspace, accessGranted, visible, file);
         return ResponseEntity.noContent().build();
     }
 
@@ -136,10 +146,10 @@ public class LayerController {
             @ApiResponse(code = 404, message = "No layer was found with this identifier")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteLayer(@RequestHeader(value = "authorization-token", required = false) String token,
+    public ResponseEntity delete    Layer(@RequestHeader(value = "authorization-token", required = false) String token,
                                       @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                       @ApiParam(value = "Identifier of the layer", required = true) @PathVariable("id") int id) {
-        //validateAccessService.validateAccess(token, userId);
+        validateAccessService.validateAccess(token, userId);
         layerService.deleteLayer(id);
         return ResponseEntity.noContent().build();
     }

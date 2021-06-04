@@ -43,7 +43,7 @@ public class LayerServiceImpl implements LayerService {
     @Override
     public LayerDto saveLayer(Integer id, String name, String referenceName, int idWorkspace, int accessGranted,
                               boolean visible, MultipartFile file) {
-        LayerDto layer = new Layer();
+        LayerDto layer = new LayerDto();
         if (id != null) {
             layer.setId(id);
         }

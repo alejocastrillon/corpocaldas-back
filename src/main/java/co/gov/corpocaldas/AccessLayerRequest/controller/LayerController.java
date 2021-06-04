@@ -42,7 +42,7 @@ public class LayerController {
                                               @RequestParam("id_workspace") int idWorkspace,
                                               @RequestParam("access_granted") int accessGranted,
                                               @RequestParam("visible") boolean visible,
-                                              @RequestParam("metadata")MultipartFile file) {
+                                              @RequestParam("metadata") MultipartFile file) {
         validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(layerService.saveLayer(null, name, referenceName, idWorkspace, accessGranted,
                 visible, file), HttpStatus.CREATED);

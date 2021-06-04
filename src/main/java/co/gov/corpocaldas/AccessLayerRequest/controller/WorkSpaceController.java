@@ -6,7 +6,6 @@ import co.gov.corpocaldas.AccessLayerRequest.dto.WorkSpaceDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import co.gov.corpocaldas.AccessLayerRequest.service.WorkSpaceService;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +29,8 @@ public class WorkSpaceController {
             @RequestHeader(value = "authorization-token", required = false) String token,
             @RequestHeader(value = "authorization-user", required = false) Integer userId,
             @RequestBody SaveWorkSpaceDto workspace) {
-        //validateAccessService.validateAccess(token, userId);
-        return new ResponseEntity<>(workSpaceService.saveWorkSpace(workspace), HttpStatus.OK);
+        validateAccessService.validateAccess(token, userId);
+        return new ResponseEntity<>(workSpaceService.saveWorkSpace(workspace), HttpStatus.CREATED);
     }
 
     @PutMapping("/{workspaceId}")
@@ -39,7 +38,7 @@ public class WorkSpaceController {
                                           @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                           @PathVariable("workspaceId") long workspaceId,
                                           @RequestBody SaveWorkSpaceDto workspace) {
-        //validateAccessService.validateAccess(token, userId);
+        validateAccessService.validateAccess(token, userId);
         workSpaceService.updateWorkSpace(workspaceId, workspace);
         return ResponseEntity.noContent().build();
     }
@@ -60,7 +59,7 @@ public class WorkSpaceController {
     public ResponseEntity deleteWorkspace(@RequestHeader(value = "authorization-token", required = false) String token,
                                           @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                           @PathVariable("workspaceId") long workspaceId) {
-        //validateAccessService.validateAccess(token, userId);
+        validateAccessService.validateAccess(token, userId);
         workSpaceService.deleteWorkspace(workspaceId);
         return ResponseEntity.noContent().build();
     }

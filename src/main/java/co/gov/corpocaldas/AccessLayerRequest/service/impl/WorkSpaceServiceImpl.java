@@ -29,6 +29,9 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
 
     @Override
     public WorkSpaceDto saveWorkSpace(SaveWorkSpaceDto workSpace) {
+        if (workSpace.getParent().getId() == 0) {
+            workSpace.setParent(null);
+        }
         return mapper.map(workSpaceRepository.save(mapper.map(workSpace, WorkSpace.class)), WorkSpaceDto.class);
     }
 

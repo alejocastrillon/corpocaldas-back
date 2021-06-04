@@ -8,7 +8,15 @@ import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
 import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("${api.base.url}/users")
@@ -28,7 +36,7 @@ public class UserController {
     public ResponseEntity<UserDto> saveUser(@RequestHeader(value = "authorization-token", required = false) String token,
                                             @RequestHeader(value = "authorization-user", required = false) Integer userId,
                                             @RequestBody UserDto user) {
-        //validateAccessService.validateAccess(token, userId);
+        validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
@@ -36,7 +44,7 @@ public class UserController {
     public ResponseEntity<Void> updateUser(@RequestHeader(value = "authorization-token", required = false) String token,
                                            @RequestHeader(value = "authorization-user", required = false) Integer authUserId,
                                            @PathVariable("userId") int userId, @RequestBody UserDto user) {
-        //validateAccessService.validateAccess(token, authUserId);
+        validateAccessService.validateAccess(token, authUserId);
         userService.updateUser(userId, user);
         return ResponseEntity.noContent().build();
     }

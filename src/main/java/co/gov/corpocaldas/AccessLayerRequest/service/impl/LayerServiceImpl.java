@@ -68,7 +68,7 @@ public class LayerServiceImpl implements LayerService {
     @Override
     public void updateLayer(int layerId, int id, String name, String referenceName, int idWokspace, int accessGranted,
                             boolean visible, MultipartFile file) {
-        if (layerId == layer.getId()) {
+        if (layerId == id) {
             saveLayer(id, name, referenceName, idWokspace, accessGranted, visible, file);
         } else {
             throw new CorpocaldasNotFoundException(ModelValidationError.MISMATCH_ID_MESSAGE);

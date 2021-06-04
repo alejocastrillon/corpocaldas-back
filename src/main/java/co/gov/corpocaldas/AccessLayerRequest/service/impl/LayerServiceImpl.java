@@ -52,6 +52,7 @@ public class LayerServiceImpl implements LayerService {
         WorkSpace workSpace = new WorkSpace();
         layer.setIdWorkspace(idWorkspace);
         layer.setAccessGranted(accessGranted);
+        layer.setVisible(visible);
         if (id == null) {
             layer.setMetadataUrl(recursoService.uploadFile(file));
         } else {

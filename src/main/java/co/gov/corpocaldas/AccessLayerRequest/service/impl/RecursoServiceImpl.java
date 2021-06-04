@@ -4,6 +4,7 @@ import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasBadRequestException;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasNotFoundException;
 import co.gov.corpocaldas.AccessLayerRequest.service.RecursoService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class RecursoServiceImpl implements RecursoService {
 
     private final Logger logger = Logger.getLogger(RecursoServiceImpl.class.getName());
 
-    public RecursoServiceImpl(String urlFolder) {
+    public RecursoServiceImpl(@Value("${url.folder}") String urlFolder) {
         this.urlFolder = urlFolder;
     }
 

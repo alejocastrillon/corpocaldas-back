@@ -4,7 +4,6 @@ import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 
 import javax.mail.MessagingException;
-import java.util.List;
 
 public interface AccessRequestService {
 
@@ -13,8 +12,11 @@ public interface AccessRequestService {
      *
      * @param accessRequest Information of the access request
      * @return Persisted information of the access request
+     * @throws javax.mail.MessagingException Error al enviar correo de
+     * notificación.
      */
-    AccessRequestDto saveRequestAccess(AccessRequestDto accessRequest) throws MessagingException;
+    AccessRequestDto saveRequestAccess(AccessRequestDto accessRequest)
+            throws MessagingException;
 
     /**
      * Update the information of a specific access request.
@@ -22,8 +24,11 @@ public interface AccessRequestService {
      * @param accessRequestId Request access identifier
      * @param accessRequest   Information of the access request
      * @return Updated information of the access request
+     * @throws javax.mail.MessagingException Error al enviar correo de
+     * notificación.
      */
-    AccessRequestDto updateRequestAccess(int accessRequestId, AccessRequestDto accessRequest) throws MessagingException;
+    AccessRequestDto updateRequestAccess(int accessRequestId,
+            AccessRequestDto accessRequest) throws MessagingException;
 
 
     /**
@@ -37,7 +42,8 @@ public interface AccessRequestService {
      * @param pageSize Size of page
      * @return Access request list
      */
-    PaginatorDto filterAccessRequests(String name, String company, String email, String layername,
-                                      Integer layeraccessgranted, int numberPage, int pageSize);
+    PaginatorDto filterAccessRequests(String name, String company, String email,
+            String layername, Integer layeraccessgranted, int numberPage,
+            int pageSize);
 
 }

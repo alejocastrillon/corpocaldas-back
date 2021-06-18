@@ -26,7 +26,8 @@ public class RecursoServiceImpl implements RecursoService {
 
     private final String urlFolder;
 
-    private final Logger logger = Logger.getLogger(RecursoServiceImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(RecursoServiceImpl
+            .class.getName());
 
     public RecursoServiceImpl(@Value("${url.folder}") String urlFolder) {
         this.urlFolder = urlFolder;
@@ -35,12 +36,14 @@ public class RecursoServiceImpl implements RecursoService {
     @Override
     public String uploadFile(MultipartFile file) {
         if (!file.isEmpty()) {
-            String typeFile = file.getContentType().substring(0, file.getContentType().indexOf("/"));
+            String typeFile = file.getContentType().substring(0, file
+                    .getContentType().indexOf("/"));
             logger.log(Level.INFO, typeFile);
             File folder = createFolder();
             return copyFileIntoFolder(folder, file);
         } else {
-            throw new CorpocaldasBadRequestException(ModelValidationError.FILE_EMPTY_EXCEPTION_MESSAGE);
+            throw new CorpocaldasBadRequestException(ModelValidationError
+                    .FILE_EMPTY_EXCEPTION_MESSAGE);
         }
     }
 
@@ -60,33 +63,41 @@ public class RecursoServiceImpl implements RecursoService {
             String extension = fileName.substring(fileName.indexOf("."));
             fileName = name + extension;
         }
-        Path pathFile = Paths.get(folder.toURI()).resolve(fileName).toAbsolutePath();
+        Path pathFile = Paths.get(folder.toURI()).resolve(fileName)
+                .toAbsolutePath();
         try {
             Files.copy(file.getInputStream(), pathFile);
             return fileName;
         } catch (IOException e) {
-            logger.log(Level.SEVERE, ModelValidationError.FILE_COPY_EXCEPTION_MESSAGE, e);
-            throw new CorpocaldasBadRequestException(ModelValidationError.FILE_COPY_EXCEPTION_MESSAGE);
+            logger.log(Level.SEVERE, ModelValidationError
+                    .FILE_COPY_EXCEPTION_MESSAGE, e);
+            throw new CorpocaldasBadRequestException(ModelValidationError
+                    .FILE_COPY_EXCEPTION_MESSAGE);
         }
     }
 
     @Override
     public Resource downloadFile(String fileName) {
         if (fileName != null) {
-            Path pathFile = Paths.get(urlFolder).resolve(fileName).toAbsolutePath();
+            Path pathFile = Paths.get(urlFolder).resolve(fileName)
+                    .toAbsolutePath();
             try {
                 Resource resource = new UrlResource(pathFile.toUri());
                 if (!resource.exists()) {
-                    throw new CorpocaldasNotFoundException(ModelValidationError.FILE_NOT_FOUND_EXCEPTION_MESSAGE);
+                    throw new CorpocaldasNotFoundException(ModelValidationError
+                            .FILE_NOT_FOUND_EXCEPTION_MESSAGE);
                 } else {
                     return resource;
                 }
             } catch (MalformedURLException e) {
-                logger.log(Level.SEVERE, ModelValidationError.FILE_NOT_FOUND_EXCEPTION_MESSAGE, e);
-                throw new CorpocaldasNotFoundException(ModelValidationError.FILE_NOT_FOUND_EXCEPTION_MESSAGE);
+                logger.log(Level.SEVERE, ModelValidationError
+                        .FILE_NOT_FOUND_EXCEPTION_MESSAGE, e);
+                throw new CorpocaldasNotFoundException(ModelValidationError
+                        .FILE_NOT_FOUND_EXCEPTION_MESSAGE);
             }
         } else {
-            throw new CorpocaldasBadRequestException(ModelValidationError.FILE_NAME_NULL_EXCEPTION_MESSAGE);
+            throw new CorpocaldasBadRequestException(ModelValidationError
+                    .FILE_NAME_NULL_EXCEPTION_MESSAGE);
         }
     }
 }

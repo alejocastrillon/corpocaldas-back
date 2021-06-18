@@ -27,8 +27,8 @@ public interface UserService {
      * @param size Quantity of items for page
      * @return Users information that have match with the values filter
      */
-    PaginatorDto getUsers(String name, String lastname, String email, String username, Boolean isEnabled, int page,
-                          int size);
+    PaginatorDto getUsers(String name, String lastname, String email,
+            String username, Boolean isEnabled, int page, int size);
 
     /**
      * Update the specific user information.

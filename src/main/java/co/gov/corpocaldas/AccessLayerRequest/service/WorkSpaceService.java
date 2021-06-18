@@ -20,7 +20,6 @@ public interface WorkSpaceService {
      * Update the information of an specific workspace for searching by its identifier.
      * @param workspaceId Identifier of the workspace
      * @param workSpace Updated information of the workspace
-     * @return Updated workspace's information
      */
     void updateWorkSpace(long workspaceId, SaveWorkSpaceDto workSpace);
 

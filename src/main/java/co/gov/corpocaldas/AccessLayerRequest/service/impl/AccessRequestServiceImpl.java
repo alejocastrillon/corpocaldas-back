@@ -47,7 +47,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
      */
     @Override
     public AccessRequestDto saveRequestAccess(AccessRequestDto accessRequest) throws MessagingException {
-        accessRequest.accessGrantedLayer == 2 ? sendNotificationMail(accessRequest) : null;
+        accessRequest.getAccessGrantedLayer() == 2 ? sendNotificationMail(accessRequest) : null;
         return mapper.map(accessRequestRepository.save(mapper.map(accessRequest, AccessRequest.class)),
                 AccessRequestDto.class);
     }

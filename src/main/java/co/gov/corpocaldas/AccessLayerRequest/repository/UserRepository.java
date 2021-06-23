@@ -13,10 +13,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query("SELECT u FROM User u WHERE u.username = :value OR u.email = :value"
-            + " AND u.password = :password")
-    Optional<User> getUserForLogin(@Param("value") String value,
-            @Param("password") String password);
+    @Query("SELECT u FROM User u WHERE u.username = :value OR u.email = :value")
+    Optional<User> getUserForLogin(@Param("value") String value);
 
     @Query("SELECT u FROM User u WHERE (:name IS NULL OR UPPER(u.name) LIKE %:name%)" +
             " AND (:lastname IS NULL OR UPPER(u.lastname) LIKE %:lastname%)"

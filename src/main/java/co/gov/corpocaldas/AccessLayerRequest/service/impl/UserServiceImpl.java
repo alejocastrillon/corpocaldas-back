@@ -73,7 +73,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(int userId, UserDto user) {
         if (userId == user.getId()) {
-            getUser(userId);
+            UserDto dataUser = getUser(userId);
+            user.setPassword(user.getPassword() != null ? user.getPassword() :
+                    Utility.decryptKey(dataUser.getPassword()));
             saveUser(user);
         } else {
             throw new CorpocaldasBadRequestException(ModelValidationError
@@ -83,10 +85,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginAccessGrantedDto login(String username, String password) {
-        User user = userRepository.getUserForLogin(username, Utility
-                .encryptKey(password)).orElseThrow(
+        User user = userRepository.getUserForLogin(username).orElseThrow(
                 () -> new CorpocaldasUnauthorizedException(ModelValidationError
                         .USER_OR_PASSWORD_WRONG));
+        String decrypt = Utility.decryptKey(user.getPassword());
+        if (!Utility.decryptKey(user.getPassword()).equals(password)) {
+            throw new CorpocaldasUnauthorizedException(ModelValidationError
+                    .USER_OR_PASSWORD_WRONG);
+        }
         LoginAccessGranted login = new LoginAccessGranted();
         login.setToken(Utility.generateToken());
         Calendar moment = Calendar.getInstance();

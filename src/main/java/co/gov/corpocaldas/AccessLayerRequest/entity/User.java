@@ -1,6 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.entity;
 
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
     /**
      * User identifier.

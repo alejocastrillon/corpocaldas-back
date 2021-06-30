@@ -2,6 +2,7 @@ package co.gov.corpocaldas.AccessLayerRequest.entity;
 
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import io.swagger.annotations.ApiModel;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "Entity class for access request's information")
-public class AccessRequest {
+public class AccessRequest implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

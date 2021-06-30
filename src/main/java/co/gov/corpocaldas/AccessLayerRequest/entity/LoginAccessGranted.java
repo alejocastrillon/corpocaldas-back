@@ -1,14 +1,19 @@
 package co.gov.corpocaldas.AccessLayerRequest.entity;
 
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Entity class to handle the information of the login access authorized.
@@ -17,7 +22,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LoginAccessGranted {
+public class LoginAccessGranted implements Serializable {
 
     /**
      * Identifier of the login access authorized.

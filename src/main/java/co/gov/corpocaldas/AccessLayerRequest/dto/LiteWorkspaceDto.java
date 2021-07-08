@@ -20,6 +20,8 @@ public class LiteWorkspaceDto {
     private String nameParent;
     @JsonBackReference
     private List<WorkSpaceDto> childrens;
+    @JsonBackReference
+    private List<LayerDto> layers;
     private boolean hasChildren;
 
     public Long getIdParent() {
@@ -39,6 +41,7 @@ public class LiteWorkspaceDto {
     }
 
     public boolean isHasChildren() {
-        return this.childrens != null && !this.childrens.isEmpty();
+        return (this.childrens != null && !this.childrens.isEmpty())
+                || (this.layers != null && !this.layers.isEmpty());
     }
 }

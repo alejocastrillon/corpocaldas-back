@@ -1,0 +1,10 @@
+{
+    "nombre": "Estación Isotópica",
+    "definicion": "La recolección del agua en el totalizador se hará desde el día 1 del mes n, hasta el día 1 del mes n+1. Ese último día se procede a tomar la muestra de acuerdo con los protocolos emitidos por la Agencia Internacional de Energía Atómica, como se muestra a continuación: Mida la cantidad de volumen de agua encontrado en la garrafa de plástico con un balde graduado y con una probeta si es necesario. Purgue dos veces la botella de 30ml donde se recolectarála muestra. Llene completamente la botella de 30ml. Si no hay agua suficiente (20 ml para isótopos estables) envíe la muestra, pero por favor, notifique la circunstancia al IDEAM. Etiquete la muestra. Escriba de forma legible el código de la estación, el mes de recogida y la cantidad total mensual de precipitación en cada botella enviada al IDEAM mediante las etiquetas suministradas. Para evitar confusión, etiquete la botella inmediatamente después de llenarla. Un ejemplo de cómo llenar la etiqueta se muestra a continuaciónCódigo: RNI_MED_1Período: 1/04/2014 al 30/04/2014Precipitación: 4,3lmmID de la estación RNI_MANZ_01MunicipioPensilvaniaDepartamentoCaldasDirecciónCampamento proyecto hidroeléctrico El Edén Coordenadas Norte Y 1.216.683 Coordenadas Oeste X 1.079.746 Altitud (m.s.n.m)2100. Tipo de instalación Totalizadorx Pluviómetro Fecha de instalación Fecha de inicio01/12/2015",
+    "objeto_geografico": "Puntos",
+    "escala": "1:25000",
+    "tipo_archivo": "Shape",
+    "fuente_informacion": "IDEAM CORPOCALDAS2015",
+    "informacion_referencia": "",
+    "proyeccion": "Transversa de Mercator"
+}

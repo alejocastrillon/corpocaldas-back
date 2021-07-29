@@ -4,6 +4,7 @@ import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,8 @@ public class AccessRequestDto {
     private String company;
     @ApiModelProperty(notes = "Description of the use that the user will give the layer", required = true)
     private String description;
+    @ApiModelProperty(notes = "Access request realization date")
+    private Date realizationDate;
     @ApiModelProperty(notes = "Layer identifier that the user wants to access", required = true)
     private int idLayer;
     @ApiModelProperty(notes = "Layer name", required = true)

@@ -3,6 +3,7 @@ package co.gov.corpocaldas.AccessLayerRequest.entity;
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -41,6 +43,9 @@ public class AccessRequest implements Serializable {
     @NotNull(message = ModelValidationError.DESCRIPTION_ACCESS_REQUEST_NULL)
     @NotBlank(message = ModelValidationError.DESCRIPTION_ACCESS_REQUEST_NULL)
     private String description;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @NotNull(message = ModelValidationError.REALIZATION_DATE_NOT_NULL)
+    private Date realizationDate;
     @ManyToOne(optional = false)
     private Layer layer;
 

@@ -7,6 +7,7 @@ import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasBad
 import co.gov.corpocaldas.AccessLayerRequest.repository.AccessRequestRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
+import java.util.Date;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,6 +51,7 @@ public class AccessRequestServiceImpl implements AccessRequestService {
         if (accessRequest.getAccessGrantedLayer() == 2) {
             sendNotificationMail(accessRequest);
         }
+        accessRequest.setRealizationDate(new Date());
         return mapper.map(accessRequestRepository.save(mapper.map(accessRequest,
                 AccessRequest.class)),
                 AccessRequestDto.class);

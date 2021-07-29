@@ -15,8 +15,8 @@ public class JavaMailSenderConfig {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost("smtp.gmail.com");
         javaMailSender.setPort(587);
-        javaMailSender.setUsername("unodosprueba2@gmail.com");
-        javaMailSender.setPassword("nzwoyozhifcyganm");
+        javaMailSender.setUsername("serviciosweb@corpocaldas.gov.co");
+        javaMailSender.setPassword("swcorpocaldas$");
         Properties props = javaMailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");

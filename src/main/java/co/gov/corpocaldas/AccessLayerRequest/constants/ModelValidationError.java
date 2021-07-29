@@ -13,6 +13,8 @@ public class ModelValidationError {
     public static final String EMAIL_REGEX = "^(.+)@(.+)$";
 
     public static final String DESCRIPTION_ACCESS_REQUEST_NULL = "La observación no debe estar vacía";
+    
+    public static final String REALIZATION_DATE_NOT_NULL = "La fecha de realización de la petición no debe estar vacía";
 
     public static final String NAME_LAYER_NULL = "El nombre de la capa no debe estar vacío";
 

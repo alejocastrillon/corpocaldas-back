@@ -2,6 +2,8 @@ package co.gov.corpocaldas.AccessLayerRequest.service;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.ExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.PdfExporter;
 
 import javax.mail.MessagingException;
 
@@ -45,5 +47,19 @@ public interface AccessRequestService {
     PaginatorDto filterAccessRequests(String name, String company, String email,
             String layername, Integer layeraccessgranted, int numberPage,
             int pageSize);
+    
+    /**
+     * Export the access request by the params selected.
+     * @param name Name of user that request the access
+     * @param company Name of company or entity associated to request
+     * @param email Email of the user that request the access
+     * @param layername Layer name associated to request
+     * @param layeraccessgranted Layer access granted associated to request
+     * @return Excel export instance
+     */
+    ExcelExporter exportExcelAccessRequest(String name, String company, String email,
+            String layername, Integer layeraccessgranted);
 
+    PdfExporter exportPdfAccessRequest(String name, String company, String email,
+            String layername, Integer layeraccessgranted);
 }

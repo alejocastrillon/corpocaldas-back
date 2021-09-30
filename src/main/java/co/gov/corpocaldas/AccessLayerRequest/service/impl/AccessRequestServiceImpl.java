@@ -6,6 +6,8 @@ import co.gov.corpocaldas.AccessLayerRequest.entity.AccessRequest;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasBadRequestException;
 import co.gov.corpocaldas.AccessLayerRequest.repository.AccessRequestRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.ExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.PdfExporter;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
 import java.util.Date;
 import org.modelmapper.ModelMapper;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class AccessRequestServiceImpl implements AccessRequestService {
@@ -109,7 +112,8 @@ public class AccessRequestServiceImpl implements AccessRequestService {
         company = company != null ? company.toUpperCase() : null;
         email = email != null ? email.toUpperCase() : null;
         layername = layername != null ? layername.toUpperCase() : null;
-        Pageable pageable = PageRequest.of(numberPage, pageSize);
+        Pageable pageable = PageRequest.of(numberPage, pageSize, Sort
+                .by(Sort.Direction.DESC, "realizationDate"));
         Page<AccessRequest> pageResult = accessRequestRepository.getAll(name,
                 company, email, layername, layeraccessgranted, pageable);
         if (pageResult.hasContent()) {
@@ -119,5 +123,19 @@ public class AccessRequestServiceImpl implements AccessRequestService {
         } else {
             return new PaginatorDto();
         }
+    }
+
+    @Override
+    public ExcelExporter exportExcelAccessRequest(String name, String company,
+            String email, String layername, Integer layeraccessgranted) {
+        return new ExcelExporter(accessRequestRepository.getAllInList(name,
+                company, email, layername, layeraccessgranted));
+    }
+
+    @Override
+    public PdfExporter exportPdfAccessRequest(String name, String company,
+            String email, String layername, Integer layeraccessgranted) {
+        return new PdfExporter(accessRequestRepository.getAllInList(name,
+                company, email, layername, layeraccessgranted));
     }
 }

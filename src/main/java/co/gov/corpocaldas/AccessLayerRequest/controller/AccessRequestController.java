@@ -4,15 +4,22 @@ import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
 import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.ExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.PdfExporter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -138,5 +145,99 @@ public class AccessRequestController {
                 name, company, email, layername, layeraccessgranted, page,
                 size), HttpStatus.OK);
     }
+    
+    /**
+     * Export on excel file on access request by params selected.
+     * @param token Access token
+     * @param userId User identifier associated to access token
+     * @param name Name of the user that request the access
+     * @param company Name of company or entity associated to request
+     * @param email Email of the user that request the access
+     * @param layername Layer name associated to request
+     * @param layeraccessgranted Layer access granted value filter
+     * @param response Response instance
+     */
+    @ApiOperation(value = "Export on excel file on access request by params"
+            + " selected")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "The filter was applied on access"
+                + " request successfully"),
+        @ApiResponse(code = 401, message = "Request not authenticated"),
+    })
+    @GetMapping("/export-excel")
+    public void exportExcelAccessRequest(
+            @RequestHeader(value = "authorization-token", required = false) String token,
+            @RequestHeader(value = "authorization-user", required = false) Integer userId,
+            @ApiParam(value = "Name of the user that request the access")
+            @RequestParam(value = "name", required = false) String name,
+            @ApiParam(value = "Name of company or entity associated to request")
+            @RequestParam(value = "company", required = false) String company,
+            @ApiParam(value = "Email of the user that request the access")
+            @RequestParam(value = "email", required = false) String email,
+            @ApiParam(value = "Layer name associated to request")
+            @RequestParam(value = "layername", required = false) String layername,
+            @ApiParam(value = "Layer access granted associated to request")
+            @RequestParam(value = "access_granted", required = false) Integer layeraccessgranted,
+            @ApiParam(value = "Response instance", hidden = true)
+                    HttpServletResponse response) throws IOException {
+        validateAccessService.validateAccess(token, userId);
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=accessos_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        ExcelExporter excelExporter = accessRequestService
+                .exportExcelAccessRequest(name, company, email, layername,
+                        layeraccessgranted);
+        excelExporter.export(response);
+    }
 
+    
+    /**
+     * Export on pdf file on access request by params selected.
+     * @param token Access token
+     * @param userId User identifier associated to access token
+     * @param name Name of the user that request the access
+     * @param company Name of company or entity associated to request
+     * @param email Email of the user that request the access
+     * @param layername Layer name associated to request
+     * @param layeraccessgranted Layer access granted value filter
+     * @param response Response instance
+     */
+    @ApiOperation(value = "Export on pdf file on access request by params"
+            + " selected")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "The filter was applied on access"
+                + " request successfully"),
+        @ApiResponse(code = 401, message = "Request not authenticated"),
+    })
+    @GetMapping("/export-pdf")
+    public void exportPdfAccessRequest(
+            @RequestHeader(value = "authorization-token", required = false) String token,
+            @RequestHeader(value = "authorization-user", required = false) Integer userId,
+            @ApiParam(value = "Name of the user that request the access")
+            @RequestParam(value = "name", required = false) String name,
+            @ApiParam(value = "Name of company or entity associated to request")
+            @RequestParam(value = "company", required = false) String company,
+            @ApiParam(value = "Email of the user that request the access")
+            @RequestParam(value = "email", required = false) String email,
+            @ApiParam(value = "Layer name associated to request")
+            @RequestParam(value = "layername", required = false) String layername,
+            @ApiParam(value = "Layer access granted associated to request")
+            @RequestParam(value = "access_granted", required = false) Integer layeraccessgranted,
+            @ApiParam(value = "Response instance", hidden = true)
+                    HttpServletResponse response) throws IOException {
+        validateAccessService.validateAccess(token, userId);
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=accessos_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+        PdfExporter pdfExporter = accessRequestService
+                .exportPdfAccessRequest(name, company, email, layername,
+                        layeraccessgranted);
+        pdfExporter.export(response);
+    }
 }

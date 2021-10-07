@@ -24,9 +24,10 @@ public interface AccessRequestRepository extends JpaRepository<AccessRequest, In
     
     @Query("SELECT a FROM AccessRequest a WHERE (:name IS NULL OR UPPER(a.name)"
             + " LIKE %:name%) AND (:company IS NULL OR UPPER(a.company) LIKE"
-            + " %:company%) AND (:email IS NULL OR UPPER(a.email) LIKE %:email%)" +
-            " AND (:layername IS NULL OR UPPER(a.layer.name) LIKE %:layername%)" +
-            " AND (:layeraccessgranted IS NULL OR a.layer.accessGranted = :layeraccessgranted)")
+            + " %:company%) AND (:email IS NULL OR UPPER(a.email) LIKE %:email%)"
+            + " AND (:layername IS NULL OR UPPER(a.layer.name) LIKE %:layername%)"
+            + " AND (:layeraccessgranted IS NULL "
+            + "OR a.layer.accessGranted = :layeraccessgranted) ORDER BY a.realizationDate DESC")
     List<AccessRequest> getAllInList(@Param("name") String name, @Param("company") String company,
                                @Param("email") String email, @Param("layername") String layername,
                                @Param("layeraccessgranted") Integer layeraccessgranted);

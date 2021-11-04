@@ -2,8 +2,8 @@ package co.gov.corpocaldas.AccessLayerRequest.service;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
-import co.gov.corpocaldas.AccessLayerRequest.service.util.ExcelExporter;
-import co.gov.corpocaldas.AccessLayerRequest.service.util.PdfExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.AccessRequestExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.AccessRequestPdfExporter;
 
 import javax.mail.MessagingException;
 
@@ -57,9 +57,9 @@ public interface AccessRequestService {
      * @param layeraccessgranted Layer access granted associated to request
      * @return Excel export instance
      */
-    ExcelExporter exportExcelAccessRequest(String name, String company, String email,
+    AccessRequestExcelExporter exportExcelAccessRequest(String name, String company, String email,
             String layername, Integer layeraccessgranted);
 
-    PdfExporter exportPdfAccessRequest(String name, String company, String email,
+    AccessRequestPdfExporter exportPdfAccessRequest(String name, String company, String email,
             String layername, Integer layeraccessgranted);
 }

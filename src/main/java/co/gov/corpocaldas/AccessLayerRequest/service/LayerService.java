@@ -2,6 +2,8 @@ package co.gov.corpocaldas.AccessLayerRequest.service;
 
 import co.gov.corpocaldas.AccessLayerRequest.dto.LayerDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.LayerExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.LayerPdfExporter;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface LayerService {
@@ -50,6 +52,28 @@ public interface LayerService {
      */
     PaginatorDto getLayers(String name, String workspace, Integer accessGranted,
             Boolean visible, int page, int size);
+    
+    /**
+     * Export the layers by params selected in excel file.
+     * @param name Layer name value filter
+     * @param workspace Workspace name value filter
+     * @param accessGranted Access granted value filter
+     * @param visible Layer visibility value filter
+     * @return 
+     */
+    LayerExcelExporter exportExcelLayer(String name, String workspace,
+            Integer accessGranted, Boolean visible);
+    
+    /**
+     * Export the layers by params selected in pdf file.
+     * @param name Layer name value filter
+     * @param workspace Workspace name value filter
+     * @param accessGranted Access granted value filter
+     * @param visible Layer visibility value filter
+     * @return 
+     */
+    LayerPdfExporter exportPdfLayer(String name, String workspace,
+            Integer accessGranted, Boolean visible);
 
     /**
      * Obtain the information of a specific layer by searching for its identifier.

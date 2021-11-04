@@ -4,8 +4,8 @@ import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
 import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
-import co.gov.corpocaldas.AccessLayerRequest.service.util.ExcelExporter;
-import co.gov.corpocaldas.AccessLayerRequest.service.util.PdfExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.AccessRequestExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.AccessRequestPdfExporter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -187,7 +187,7 @@ public class AccessRequestController {
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=accessos_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
-        ExcelExporter excelExporter = accessRequestService
+        AccessRequestExcelExporter excelExporter = accessRequestService
                 .exportExcelAccessRequest(name, company, email, layername,
                         layeraccessgranted);
         excelExporter.export(response);
@@ -235,7 +235,7 @@ public class AccessRequestController {
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=accessos_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
-        PdfExporter pdfExporter = accessRequestService
+        AccessRequestPdfExporter pdfExporter = accessRequestService
                 .exportPdfAccessRequest(name, company, email, layername,
                         layeraccessgranted);
         pdfExporter.export(response);

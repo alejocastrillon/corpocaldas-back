@@ -4,11 +4,18 @@ import co.gov.corpocaldas.AccessLayerRequest.dto.LayerDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
 import co.gov.corpocaldas.AccessLayerRequest.service.ValidateAccessService;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.LayerExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.LayerPdfExporter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -237,6 +244,82 @@ public class LayerController {
         validateAccessService.validateAccess(token, userId);
         layerService.deleteLayer(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    /**
+     * Export on excel file the layers info.
+     * @param name Value for name field search
+     * @param workspace Value for workspace field search
+     * @param accessGranted Value for access granted field search
+     * @param visible Value for visibility field search
+     * @param response Response instance
+     */
+    @ApiOperation(value = "Export on excel file the layers info")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "All the layers was obtained successfully")
+    })
+    @GetMapping("/export-excel")
+    public void exportExcelLayers(
+            @RequestHeader(value = "authorization-token", required = false) String token,
+            @RequestHeader(value = "authorization-user", required = false) Integer userId,
+            @ApiParam(value = "Value for name field search")
+            @RequestParam(value = "name", required = false) String name,
+            @ApiParam(value = "Value for workspace field search")
+            @RequestParam(value = "workspace", required = false) String workspace,
+            @ApiParam(value = "Value for access granted field search")
+            @RequestParam(value = "access_granted", required = false) Integer accessGranted,
+            @ApiParam(value = "Value for visibility field search")
+            @RequestParam(value = "visible", required = false) Boolean visible,
+            @ApiParam(value = "Response instance", hidden = true)
+                    HttpServletResponse response) throws IOException {
+        validateAccessService.validateAccess(token, userId);
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=capas_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        LayerExcelExporter excelExporter = layerService.exportExcelLayer(name,
+                workspace, accessGranted, visible);
+        excelExporter.export(response);
+    }
+    
+    /**
+     * Export on pdf file the layers info.
+     * @param name Value for name field search
+     * @param workspace Value for workspace field search
+     * @param accessGranted Value for access granted field search
+     * @param visible Value for visibility field search
+     * @param response Response instance
+     */
+    @ApiOperation(value = "Export on pdf file the layers info")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "All the layers was obtained successfully")
+    })
+    @GetMapping("/export-pdf")
+    public void exportPdfLayers(
+            @RequestHeader(value = "authorization-token", required = false) String token,
+            @RequestHeader(value = "authorization-user", required = false) Integer userId,
+            @ApiParam(value = "Value for name field search")
+            @RequestParam(value = "name", required = false) String name,
+            @ApiParam(value = "Value for workspace field search")
+            @RequestParam(value = "workspace", required = false) String workspace,
+            @ApiParam(value = "Value for access granted field search")
+            @RequestParam(value = "access_granted", required = false) Integer accessGranted,
+            @ApiParam(value = "Value for visibility field search")
+            @RequestParam(value = "visible", required = false) Boolean visible,
+            @ApiParam(value = "Response instance", hidden = true)
+                    HttpServletResponse response) throws IOException {
+        validateAccessService.validateAccess(token, userId);
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=capas_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+        LayerPdfExporter pdfExporter = layerService.exportPdfLayer(name,
+                workspace, accessGranted, visible);
+        pdfExporter.export(response);
     }
     
 }

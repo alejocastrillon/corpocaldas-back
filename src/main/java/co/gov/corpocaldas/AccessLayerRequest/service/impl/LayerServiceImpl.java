@@ -8,6 +8,8 @@ import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasNot
 import co.gov.corpocaldas.AccessLayerRequest.repository.LayerRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.LayerService;
 import co.gov.corpocaldas.AccessLayerRequest.service.RecursoService;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.LayerExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.LayerPdfExporter;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -108,5 +110,19 @@ public class LayerServiceImpl implements LayerService {
     @Override
     public void deleteLayer(int id) {
         repository.delete(mapper.map(getLayer(id), Layer.class));
+    }
+
+    @Override
+    public LayerExcelExporter exportExcelLayer(String name, String workspace,
+            Integer accessGranted, Boolean visible) {
+        return new LayerExcelExporter(repository.getAllInList(name, workspace,
+                accessGranted, visible));
+    }
+
+    @Override
+    public LayerPdfExporter exportPdfLayer(String name, String workspace,
+            Integer accessGranted, Boolean visible) {
+        return new LayerPdfExporter(repository.getAllInList(name, workspace,
+                accessGranted, visible));
     }
 }

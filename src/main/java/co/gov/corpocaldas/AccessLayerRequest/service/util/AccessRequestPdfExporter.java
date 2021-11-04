@@ -27,11 +27,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alejandroutp
  */
-public class PdfExporter {
+public class AccessRequestPdfExporter {
      
     private final List<AccessRequest> access;
 
-    public PdfExporter(List<AccessRequest> access) {
+    public AccessRequestPdfExporter(List<AccessRequest> access) {
         this.access = access;
     }
     

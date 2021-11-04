@@ -1,6 +1,7 @@
 package co.gov.corpocaldas.AccessLayerRequest.repository;
 
 import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,8 +19,17 @@ public interface LayerRepository extends JpaRepository<Layer, Integer> {
             " AND (:accessGranted IS NULL OR l.accessGranted = :accessGranted)" +
             " AND (:visible IS NULL OR l.visible = :visible)")
     Page<Layer> getAll(@Param("name") String name, @Param("workspace") String workspace,
-                       @Param("accessGranted") Integer accessGranted,
-                       @Param("visible") Boolean visible, Pageable pageable);
+            @Param("accessGranted") Integer accessGranted,
+            @Param("visible") Boolean visible, Pageable pageable);
+    
+    @Query("SELECT l FROM Layer l WHERE (:name IS NULL OR UPPER(l.name) LIKE %:name%)" +
+            " AND (:workspace IS NULL OR UPPER(l.workspace.name) LIKE %:workspace%)" +
+            " AND (:accessGranted IS NULL OR l.accessGranted = :accessGranted)" +
+            " AND (:visible IS NULL OR l.visible = :visible)")
+    List<Layer> getAllInList(@Param("name") String name,
+            @Param("workspace") String workspace,
+            @Param("accessGranted") Integer accessGranted,
+            @Param("visible") Boolean visible);
 
     Optional<Layer> findByName(String name);
 

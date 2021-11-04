@@ -6,8 +6,8 @@ import co.gov.corpocaldas.AccessLayerRequest.entity.AccessRequest;
 import co.gov.corpocaldas.AccessLayerRequest.exception.httpstatus.CorpocaldasBadRequestException;
 import co.gov.corpocaldas.AccessLayerRequest.repository.AccessRequestRepository;
 import co.gov.corpocaldas.AccessLayerRequest.service.AccessRequestService;
-import co.gov.corpocaldas.AccessLayerRequest.service.util.ExcelExporter;
-import co.gov.corpocaldas.AccessLayerRequest.service.util.PdfExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.AccessRequestExcelExporter;
+import co.gov.corpocaldas.AccessLayerRequest.service.util.AccessRequestPdfExporter;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.Utility;
 import java.util.Date;
 import org.modelmapper.ModelMapper;
@@ -126,16 +126,16 @@ public class AccessRequestServiceImpl implements AccessRequestService {
     }
 
     @Override
-    public ExcelExporter exportExcelAccessRequest(String name, String company,
+    public AccessRequestExcelExporter exportExcelAccessRequest(String name, String company,
             String email, String layername, Integer layeraccessgranted) {
-        return new ExcelExporter(accessRequestRepository.getAllInList(name,
+        return new AccessRequestExcelExporter(accessRequestRepository.getAllInList(name,
                 company, email, layername, layeraccessgranted));
     }
 
     @Override
-    public PdfExporter exportPdfAccessRequest(String name, String company,
+    public AccessRequestPdfExporter exportPdfAccessRequest(String name, String company,
             String email, String layername, Integer layeraccessgranted) {
-        return new PdfExporter(accessRequestRepository.getAllInList(name,
+        return new AccessRequestPdfExporter(accessRequestRepository.getAllInList(name,
                 company, email, layername, layeraccessgranted));
     }
 }

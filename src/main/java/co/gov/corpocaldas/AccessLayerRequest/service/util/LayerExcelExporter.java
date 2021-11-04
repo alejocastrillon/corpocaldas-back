@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package co.gov.corpocaldas.AccessLayerRequest.service.util;
 
-import co.gov.corpocaldas.AccessLayerRequest.entity.AccessRequest;
+import co.gov.corpocaldas.AccessLayerRequest.entity.Layer;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,19 +23,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author alejandroutp
  */
-public class ExcelExporter {
+public class LayerExcelExporter {
     
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
-    private List<AccessRequest> access;
+    private List<Layer> layers;
 
-    public ExcelExporter(List<AccessRequest> access) {
-        this.access = access;
+    public LayerExcelExporter(List<Layer> layers) {
+        this.layers = layers;
         this.workbook = new XSSFWorkbook();
     }
     
     private void writeHeaderLine() {
-        sheet = workbook.createSheet("Accesos");
+        sheet = workbook.createSheet("Inventarios de capas");
         Row row = sheet.createRow(0);
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
@@ -45,13 +44,9 @@ public class ExcelExporter {
         style.setFont(font);
         createCell(row, 0, "ID", style);      
         createCell(row, 1, "Nombre", style);       
-        createCell(row, 2, "Correo Electronico", style);    
-        createCell(row, 3, "Compañia", style);
-        createCell(row, 4, "Descripción de uso", style);
-        createCell(row, 5, "Fecha de realización", style);
-        createCell(row, 6, "Identificador de la capa", style);
-        createCell(row, 7, "Nombre de la capa", style);
-        createCell(row, 8, "Tipo de información", style);
+        createCell(row, 2, "Espacio de trabajo", style);    
+        createCell(row, 3, "Tipo de Información", style);
+        createCell(row, 4, "Visibilidad", style);
     }
      
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
@@ -75,21 +70,16 @@ public class ExcelExporter {
         style.setFont(font);
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                  
-        for (AccessRequest accesso  : access) {
+        for (Layer layer : layers) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
-            createCell(row, columnCount++, accesso.getId(), style);
-            createCell(row, columnCount++, accesso.getName(), style);
-            createCell(row, columnCount++, accesso.getEmail(), style);
-            createCell(row, columnCount++, accesso.getCompany(), style);
-            createCell(row, columnCount++, accesso.getDescription(), style);
-            createCell(row, columnCount++, dateFormat.format(accesso
-                    .getRealizationDate()), style);
-            createCell(row, columnCount++, accesso.getLayer().getId(), style);
-            createCell(row, columnCount++, accesso.getLayer().getName(), style);
-            createCell(row, columnCount++, accesso.getLayer()
-                    .getAccessGranted() == 1 ? "Información Corpocaldas"
-                    : "Información Externa", style);
+            createCell(row, columnCount++, layer.getId(), style);
+            createCell(row, columnCount++, layer.getName(), style);
+            createCell(row, columnCount++, layer.getWorkspace().getName(), style);
+            createCell(row, columnCount++, layer.getAccessGranted() == 1
+                    ? "Información de Corpocaldas" : "Información Externa", style);
+            createCell(row, columnCount++, layer.isVisible() ? "Visible"
+                    : "No visible", style);
         }
     }
      

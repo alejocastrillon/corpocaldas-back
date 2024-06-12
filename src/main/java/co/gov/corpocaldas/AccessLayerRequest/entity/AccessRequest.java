@@ -2,22 +2,22 @@ package co.gov.corpocaldas.AccessLayerRequest.entity;
 
 import co.gov.corpocaldas.AccessLayerRequest.constants.ModelValidationError;
 import io.swagger.annotations.ApiModel;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-
-import javax.persistence.ManyToOne;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -43,7 +43,7 @@ public class AccessRequest implements Serializable {
     @NotNull(message = ModelValidationError.DESCRIPTION_ACCESS_REQUEST_NULL)
     @NotBlank(message = ModelValidationError.DESCRIPTION_ACCESS_REQUEST_NULL)
     private String description;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     @NotNull(message = ModelValidationError.REALIZATION_DATE_NOT_NULL)
     private Date realizationDate;
     @ManyToOne(optional = false)

@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRESS_PASSWORD: 12345678
+    volumes:
+      - /Users/alejandrocastrillonlibreros/Public/postgres:/var/lib/postgresql/data
+  
+  geoserver:
+    image: oscarfonts/geoserver
+    ports:
+      - "8080:8080"
+    restart: always
+    volumes:
+      - /Users/alejandrocastrillonlibreros/Public/geoserver:/var/local/geoserver
+  
+  corpocaldas:
+    image: corpocaldas
+    ports:
+      - "8081:8081"
+    restart: always
+    depends_on:
+      - postgres
+      - geoserver
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/corpocaldas
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 12345678

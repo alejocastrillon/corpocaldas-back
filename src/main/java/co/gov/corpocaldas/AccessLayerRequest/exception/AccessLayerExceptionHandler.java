@@ -6,6 +6,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,9 +22,10 @@ import java.util.List;
 @ControllerAdvice
 public class AccessLayerExceptionHandler extends ResponseEntityExceptionHandler {
 
+
     @Override
     @ExceptionHandler(value = {ConstraintViolationException.class, DataIntegrityViolationException.class})
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         List<String> details = new ArrayList<>();
         for (ObjectError error: e.getBindingResult().getAllErrors()) {
             details.add(error.getDefaultMessage());

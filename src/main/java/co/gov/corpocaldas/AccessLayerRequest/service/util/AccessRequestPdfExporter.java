@@ -6,6 +6,8 @@
 package co.gov.corpocaldas.AccessLayerRequest.service.util;
 
 import co.gov.corpocaldas.AccessLayerRequest.entity.AccessRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
@@ -21,7 +23,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *

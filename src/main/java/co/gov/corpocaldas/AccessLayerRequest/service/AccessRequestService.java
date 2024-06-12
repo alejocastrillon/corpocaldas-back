@@ -4,8 +4,8 @@ import co.gov.corpocaldas.AccessLayerRequest.dto.AccessRequestDto;
 import co.gov.corpocaldas.AccessLayerRequest.dto.PaginatorDto;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.AccessRequestExcelExporter;
 import co.gov.corpocaldas.AccessLayerRequest.service.util.AccessRequestPdfExporter;
+import jakarta.mail.MessagingException;
 
-import javax.mail.MessagingException;
 
 public interface AccessRequestService {
 

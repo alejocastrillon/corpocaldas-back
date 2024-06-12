@@ -55,13 +55,9 @@ public class UserController {
     })
     @PostMapping()
     public ResponseEntity<UserDto> saveUser(
-            @ApiParam(value = "Access token", required = true)
-            @RequestHeader(value = "authorization-token", required = false) String token,
-            @ApiParam(value = "User identifier associated to access token", required = true)
-            @RequestHeader(value = "authorization-user", required = false) Integer userId,
             @ApiParam(value = "User information", required = true)
             @RequestBody UserDto user) {
-        validateAccessService.validateAccess(token, userId);
+        //validateAccessService.validateAccess(token, userId);
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 

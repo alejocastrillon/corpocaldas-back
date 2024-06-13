@@ -16,7 +16,7 @@ services:
       - /Users/alejandrocastrillonlibreros/Public/geoserver:/var/local/geoserver
   
   corpocaldas:
-    image: corpocaldas
+    image: alejocastrillon/corpocaldas
     ports:
       - "8081:8081"
     restart: always
